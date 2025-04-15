@@ -12,12 +12,12 @@
 
     <!-- 中间区域：宽度为屏幕的50% -->
     <div
-      class="w-[50%] h-[70%] mr-5 opacity-30 bg-yellow-100 p-3 flex flex-col"
+      class="w-[50%] h-[70%] mr-5 bg-yellow-100/3 p-3 flex flex-col"
     >
       <T
-        class="opacity-50 bg-yellow-400 box-border p-3 mt-0 mb-3 basis-[22.22%] shrink-0"
+        class=" bg-yellow-400/3 box-border p-3 mt-0 mb-3 basis-[15%] shrink-0"
       />
-      <mapChart class="opacity-50 bg-yellow-400 p-3 grow" />
+      <mapChart class=" bg-yellow-400/3 p-3 grow" />
     </div>
 
     <!-- 底部区域：占据左侧和中间区域下方30%高度 -->

@@ -8,8 +8,6 @@ import { ref, onMounted } from 'vue'
 import * as echarts from 'echarts'
 import graphData from '../data/graph1.json'
 
-console.log(graphData.series[0].data)
-
 const chart = ref(null)
 
 onMounted(() => {
