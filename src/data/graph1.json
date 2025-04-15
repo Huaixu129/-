@@ -3,7 +3,7 @@
     "data": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
     "name": "星期",
     "axisLabel": {
-      "color": "#333"
+      "color": "#800"
     }
   },
   "yAxis": {
