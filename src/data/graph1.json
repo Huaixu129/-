@@ -1,0 +1,32 @@
+{
+  "xAxis": {
+    "data": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+    "name": "星期",
+    "axisLabel": {
+      "color": "#333"
+    }
+  },
+  "yAxis": {
+    "name": "数值",
+    "axisLabel": {
+      "color": "#333"
+    }
+  },
+  "series": [
+    {
+      "name": "水利工程数据",
+      "type": "bar",
+      "data": [23, 24, 18, 25, 27, 28, 25],
+      "itemStyle": {
+        "color": "#5470C6"
+      }
+    }
+  ],
+  "title": {
+    "text": "水利工程基本信息统计",
+    "left": "center"
+  },
+  "tooltip": {
+    "trigger": "axis"
+  }
+}
