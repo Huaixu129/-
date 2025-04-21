@@ -5,6 +5,7 @@
 import mapJson from "../assets/map/china.json";
 import { onMounted, ref } from "vue";
 import * as echarts from "echarts";
+import locIcon from '../assets/img/loc.svg';
 
 const chartContainer = ref(null);
 
@@ -26,12 +27,16 @@ const renderChart = () => {
       left: 0,
       right: 0,
       bottom: 0,
+      scaleLimit: {
+        min: 1,
+        max: 10
+      },
       itemStyle: {
-        borderColor: "rgba(34, 147, 136, 0.1)",
+        borderColor: "rgba(34, 147, 136, 0.4)",
         borderWidth: 1.5,
-        shadowColor: "rgba(0, 0, 0, 0.2)",
+        shadowColor: "rgba(0, 0, 0, 0.1)",
         shadowBlur: 10,
-        areaColor: "#e8daac",
+        areaColor: "rgba(232, 218, 172, 1)",
       },
       emphasis: {
         itemStyle: {
@@ -46,41 +51,34 @@ const renderChart = () => {
         },
       },
       label: {
-        show: false,
+        show: true,
+        color: "#3a3d49",
+        fontSize: 10,
       },
     },
     series: [
       {
-        type: "map",
-        map: "china",
-        roam: false,
-        zoom: 1,
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        label: {
-          show: true,
-          color: "#e8f5e9",
-          fontSize: 10,
-        },
-        itemStyle: {
-          borderColor: "#136e67",
-          areaColor: "transparent",
-        },
+        type: 'scatter',
+        coordinateSystem: 'geo',
+        symbol: `image://${locIcon}`,
+        symbolSize: 20,
+        data: [
+          {name: '北京', value: [116.405285, 39.904989]},
+          {name: '上海', value: [121.472644, 31.231706]},
+        ],
         emphasis: {
           itemStyle: {
-            areaColor: "#e8daac",
-          },
-          label: {
-            color: "#fff",
-          },
-        },
-      },
-    ],
+            color: '#fff'
+          }
+        }
+      }
+    ]
   };
 
   chart.setOption(options);
+  chart.on('click', 'series.scatter', (params) => {
+    window.location.href = `/detail?province=${params.name}`;
+  });
 
   // 自适应
   window.addEventListener("resize", () => {
