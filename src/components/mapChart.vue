@@ -27,31 +27,15 @@ const renderChart = () => {
       right: 0,
       bottom: 0,
       itemStyle: {
-        borderColor: "rgba(34, 147, 136, 1)",
+        borderColor: "rgba(34, 147, 136, 0.1)",
         borderWidth: 1.5,
         shadowColor: "rgba(0, 0, 0, 0.2)",
         shadowBlur: 10,
-        areaColor: {
-          type: "radial",
-          x: 0.5,
-          y: 0.5,
-          r: 0.8,
-          colorStops: [
-            {
-              offset: 0,
-              color: "#a2d4ab", // 淡绿色中心
-            },
-            {
-              offset: 1,
-              color: "#218b82", // 青绿色外圈
-            },
-          ],
-          global: false,
-        },
+        areaColor: "#e8daac",
       },
       emphasis: {
         itemStyle: {
-          areaColor: "#54b8a1",
+          areaColor: "#e0c58f",
           shadowColor: "#333",
           shadowBlur: 20,
         },
@@ -78,7 +62,7 @@ const renderChart = () => {
         label: {
           show: true,
           color: "#e8f5e9",
-          fontSize: 12,
+          fontSize: 10,
         },
         itemStyle: {
           borderColor: "#136e67",
@@ -86,7 +70,7 @@ const renderChart = () => {
         },
         emphasis: {
           itemStyle: {
-            areaColor: "#56c6a9",
+            areaColor: "#e8daac",
           },
           label: {
             color: "#fff",

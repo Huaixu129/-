@@ -4,7 +4,7 @@
   >
     <!-- 左侧区域：宽度为屏幕的25% -->
     <div
-      class="w-[25%] h-[70%] mr-5 bg-yellow-100/30 p-3 flex flex-col"
+      class="w-[25%] h-[70%] mr-5 bg-yellow-100/1 p-3 flex flex-col"
     >
       <graph1 class="h-1/2 box-border pb-4"/>
       <graph2 class="h-1/2 box-border pb-4" />
@@ -12,23 +12,23 @@
 
     <!-- 中间区域：宽度为屏幕的50% -->
     <div
-      class="w-[50%] h-[70%] mr-5 bg-yellow-100/3 p-3 flex flex-col"
+      class="w-[50%] h-[70%] mr-5 bg-yellow-100/1 p-3 flex flex-col"
     >
       <T
-        class=" bg-yellow-400/3 box-border p-3 mt-0 mb-3 basis-[15%] shrink-0"
+        class=" bg-yellow-400/3 box-border p-3 mt-0 mb-3 basis-[20%] shrink-0"
       />
-      <mapChart class=" bg-yellow-400/3 p-3 grow" />
+      <mapChart class=" bg-yellow-400/1 p-3 grow" />
     </div>
 
     <!-- 底部区域：占据左侧和中间区域下方30%高度 -->
     <div
-      class="w-[71.5%] h-[25%] absolute bottom-5 opacity-30 bg-yellow-100 p-3 flex flex-col"
+      class="w-[71.5%] h-[25%] absolute bottom-5 bg-yellow-100/1 p-3 flex flex-col"
     >
       <graph3 class="pb-1" />
     </div>
 
     <!-- 右侧区域：宽度为屏幕的25% -->
-    <div class="w-[25%] opacity-30 bg-yellow-100 p-3 flex flex-col">
+    <div class="w-[25%] bg-yellow-100/1 p-3 flex flex-col">
       <graph4 class="h-1/3 box-border pb-4" />
       <graph5 class="h-1/3 box-border pb-4" />
       <graph6 class="h-1/3 box-border pb-4" />
