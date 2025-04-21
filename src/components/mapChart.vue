@@ -6,6 +6,7 @@ import mapJson from "../assets/map/china.json";
 import { onMounted, ref } from "vue";
 import * as echarts from "echarts";
 import locIcon from '../assets/img/loc.svg';
+import router from '../router';
 
 const chartContainer = ref(null);
 
@@ -77,7 +78,7 @@ const renderChart = () => {
 
   chart.setOption(options);
   chart.on('click', 'series.scatter', (params) => {
-    window.location.href = `/detail?province=${params.name}`;
+    router.push({ path: '/detail', query: { province: params.name } });
   });
 
   // 自适应

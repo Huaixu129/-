@@ -1,7 +1,8 @@
 <template lang="">
-  <div
-    class="bg-[url('assets/img/image.png')] bg-cover bg-center w-screen h-screen text-black p-5 flex overflow-hidden"
-  >
+  <div class="bg-[url('assets/img/image.png')] bg-cover bg-center w-screen h-screen text-black p-5 flex overflow-hidden">
+    <!-- 添加router-view确保路由内容可以显示 -->
+    <router-view></router-view>
+    
     <!-- 左侧区域：宽度为屏幕的25% -->
     <div
       class="w-[25%] h-[70%] mr-5 bg-yellow-100/1 p-3 flex flex-col"
