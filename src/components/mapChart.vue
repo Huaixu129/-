@@ -1,5 +1,5 @@
 <template lang="">
-  <div ref="chartContainer" style="width: 80%; height: 80%; margin-left: 7%"></div>
+  <div ref="chartContainer" style="width: 100%; height: 100%"></div>
 </template>
 <script setup>
 import mapJson from "../assets/map/china.json";

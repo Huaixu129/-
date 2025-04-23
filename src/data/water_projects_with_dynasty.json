@@ -1,0 +1,107 @@
+[
+    {
+        "name": "鸿沟",
+        "province": "河南省",
+        "dynasty": "春秋"
+    },
+    {
+        "name": "都江堰",
+        "province": "四川省",
+        "dynasty": "战国"
+    },
+    {
+        "name": "郑国渠",
+        "province": "陕西省",
+        "dynasty": "战国"
+    },
+    {
+        "name": "引漳十二渠",
+        "province": "河北省",
+        "dynasty": "战国"
+    },
+    {
+        "name": "灵渠",
+        "province": "广西壮族自治区",
+        "dynasty": "秦"
+    },
+    {
+        "name": "鉴湖",
+        "province": "浙江省",
+        "dynasty": "汉"
+    },
+    {
+        "name": "洪泽湖大堤",
+        "province": "江苏省",
+        "dynasty": "汉"
+    },
+    {
+        "name": "七门堰",
+        "province": "安徽省",
+        "dynasty": "汉"
+    },
+    {
+        "name": "坎儿井",
+        "province": "新疆维吾尔自治区",
+        "dynasty": "汉"
+    },
+    {
+        "name": "白渠",
+        "province": "陕西省",
+        "dynasty": "汉"
+    },
+    {
+        "name": "龙首渠",
+        "province": "陕西省",
+        "dynasty": "汉"
+    },
+    {
+        "name": "邗沟",
+        "province": "江苏省",
+        "dynasty": "隋"
+    },
+    {
+        "name": "隋唐大运河",
+        "province": "河南省",
+        "dynasty": "隋"
+    },
+    {
+        "name": "它山堰",
+        "province": "浙江省",
+        "dynasty": "唐"
+    },
+    {
+        "name": "练湖",
+        "province": "江苏省",
+        "dynasty": "唐"
+    },
+    {
+        "name": "相思埭",
+        "province": "广西壮族自治区",
+        "dynasty": "唐"
+    },
+    {
+        "name": "钱塘海塘工程",
+        "province": "浙江省",
+        "dynasty": "五代十国"
+    },
+    {
+        "name": "芍陂",
+        "province": "安徽省",
+        "dynasty": "五代十国"
+    },
+    {
+        "name": "木兰陂",
+        "province": "福建省",
+        "dynasty": "宋"
+    },
+    {
+        "name": "通惠河",
+        "province": "北京市",
+        "dynasty": "元"
+    },
+    {
+        "name": "戴村坝",
+        "province": "山东省",
+        "dynasty": "明"
+    }
+]
