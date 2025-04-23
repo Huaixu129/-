@@ -78,7 +78,12 @@ const renderChart = () => {
 
   chart.setOption(options);
   chart.on('click', 'series.scatter', (params) => {
-    router.push({ path: '/detail', query: { province: params.name } });
+    console.log('点击参数:', params); // 调试用
+    if (params && params.name) {
+      router.push({ path: '/detail', query: { province: params.name } });
+    } else {
+      console.error('无效的点击参数:', params);
+    }
   });
 
   // 自适应

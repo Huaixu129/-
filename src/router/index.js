@@ -5,7 +5,8 @@ const routes = [
   {
     path: '/detail',
     name: 'Detail',
-    component: Detail
+    component: Detail,
+    props: (route) => ({ province: route.query.province })
   }
 ]
 

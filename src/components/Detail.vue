@@ -3,7 +3,7 @@
     <!-- 顶部标题栏 -->
     <div class="title-bar flex items-center px-4">
       <button @click="goBack" class="back-button mr-4">返回主页</button>
-      <h1 class="text-xl font-bold">{{ $route.query.province }} 水利工程详情</h1>
+      <h1 class="text-xl font-bold">{{ province }} 水利工程详情</h1>
     </div>
 
     <!-- 下方五格区域 -->
@@ -24,18 +24,21 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'Detail',
-  methods: {
-    goBack() {
-      this.$router.push('/');
-    }
-  },
-  mounted() {
-    console.log('当前路由参数:', this.$route.query); // 调试用
+<script setup>
+import { useRouter } from 'vue-router';
+
+const props = defineProps({
+  province: {
+    type: String,
+    required: true
   }
-}
+});
+
+const router = useRouter();
+
+const goBack = () => {
+  router.push('/');
+}; // 调试用
 </script>
 
 <style scoped>

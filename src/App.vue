@@ -1,4 +1,5 @@
 <template lang="">
+  <router-view />
   <div class="bg-[url('assets/img/image.png')] dashboard-container">
     <div class="dashboard-item title">
       <T
