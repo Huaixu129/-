@@ -48,13 +48,23 @@ import { ref, provide } from 'vue';
 // 当前朝代状态
 const currentDynasty = ref('春秋');
 
+// 当前悬浮的水利工程
+const hoveredProject = ref(null);
+
 // 朝代变更处理函数
 const onDynastyChange = (dynasty) => {
   currentDynasty.value = dynasty;
 };
 
+// 悬浮项目变更处理函数
+const onProjectHover = (projectName) => {
+  hoveredProject.value = projectName;
+};
+
 // 提供当前朝代给其他组件
 provide('currentDynasty', currentDynasty);
+// 提供当前悬浮项目给其他组件
+provide('hoveredProject', hoveredProject);
 </script>
 
 <style>

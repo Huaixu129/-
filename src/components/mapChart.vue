@@ -13,6 +13,8 @@ const chartContainer = ref(null);
 const chart = ref(null);
 // 注入当前朝代状态
 const currentDynasty = inject('currentDynasty');
+// 注入悬浮项目状态
+const hoveredProject = inject('hoveredProject');
 
 onMounted(() => {
   echarts.registerMap("china", mapJson);
@@ -109,6 +111,18 @@ const renderChart = () => {
     } else {
       console.error('无效的点击参数:', params);
     }
+  });
+  
+  // 添加鼠标悬浮事件
+  chart.value.on('mouseover', 'series.scatter', (params) => {
+    if (params && params.name) {
+      hoveredProject.value = params.name;
+    }
+  });
+  
+  // 添加鼠标离开事件
+  chart.value.on('mouseout', 'series.scatter', () => {
+    hoveredProject.value = null;
   });
 };
 </script>
