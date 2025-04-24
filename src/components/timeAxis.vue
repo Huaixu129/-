@@ -53,6 +53,8 @@
         // Ensure currentDynasty is treated as a number
         this.currentDynasty = Number(this.currentDynasty);
         console.log(`Current Dynasty: ${this.dynasties[this.currentDynasty]}`);
+        // 发射朝代变化事件
+        this.$emit('dynasty-change', this.dynasties[this.currentDynasty]);
       }
     },
     mounted() {

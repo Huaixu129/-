@@ -16,7 +16,7 @@
       <mapChart class="bg-yellow-400/1 grow" /> 
     </div>
     <div class="dashboard-item timeline">
-      <timeAxis class="bg-yellow-400/1 p-3 grow" />
+      <timeAxis class="bg-yellow-400/1 p-3 grow" @dynasty-change="onDynastyChange" />
     </div>
     <div class="dashboard-item chart-right-top">
       <graph4 class="h-1/3 box-border pb-4" />
@@ -43,6 +43,18 @@ import graph6 from "./components/graph6.vue";
 import mapChart from "./components/mapChart.vue";
 import T from "./components/T.vue";
 import timeAxis from "./components/timeAxis.vue";
+import { ref, provide } from 'vue';
+
+// 当前朝代状态
+const currentDynasty = ref('春秋');
+
+// 朝代变更处理函数
+const onDynastyChange = (dynasty) => {
+  currentDynasty.value = dynasty;
+};
+
+// 提供当前朝代给其他组件
+provide('currentDynasty', currentDynasty);
 </script>
 
 <style>
