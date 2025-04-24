@@ -2,106 +2,127 @@
     {
         "name": "鸿沟",
         "province": "河南省",
-        "dynasty": "春秋"
+        "dynasty": "春秋",
+        "coordinates": [113.6654, 34.7579]
     },
     {
         "name": "都江堰",
         "province": "四川省",
-        "dynasty": "战国"
+        "dynasty": "战国",
+        "coordinates": [104.0657, 30.6595]
     },
     {
         "name": "郑国渠",
         "province": "陕西省",
-        "dynasty": "战国"
+        "dynasty": "战国",
+        "coordinates": [108.9480, 34.2632]
     },
     {
         "name": "引漳十二渠",
         "province": "河北省",
-        "dynasty": "战国"
+        "dynasty": "战国",
+        "coordinates": [114.5025, 38.0455]
     },
     {
         "name": "灵渠",
         "province": "广西壮族自治区",
-        "dynasty": "秦"
+        "dynasty": "秦",
+        "coordinates": [110.2983, 25.2748]
     },
     {
         "name": "鉴湖",
         "province": "浙江省",
-        "dynasty": "汉"
+        "dynasty": "汉",
+        "coordinates": [120.1536, 30.2875]
     },
     {
         "name": "洪泽湖大堤",
         "province": "江苏省",
-        "dynasty": "汉"
+        "dynasty": "汉",
+        "coordinates": [118.7674, 32.0415]
     },
     {
         "name": "七门堰",
         "province": "安徽省",
-        "dynasty": "汉"
+        "dynasty": "汉",
+        "coordinates": [117.2830, 31.8612]
     },
     {
         "name": "坎儿井",
         "province": "新疆维吾尔自治区",
-        "dynasty": "汉"
+        "dynasty": "汉",
+        "coordinates": [87.6168, 43.8256]
     },
     {
         "name": "白渠",
         "province": "陕西省",
-        "dynasty": "汉"
+        "dynasty": "汉",
+        "coordinates": [108.9482, 34.2634]
     },
     {
         "name": "龙首渠",
         "province": "陕西省",
-        "dynasty": "汉"
+        "dynasty": "汉",
+        "coordinates": [108.9484, 34.2636]
     },
     {
         "name": "邗沟",
         "province": "江苏省",
-        "dynasty": "隋"
+        "dynasty": "隋",
+        "coordinates": [118.7676, 32.0417]
     },
     {
         "name": "隋唐大运河",
         "province": "河南省",
-        "dynasty": "隋"
+        "dynasty": "隋",
+        "coordinates": [113.6656, 34.7581]
     },
     {
         "name": "它山堰",
         "province": "浙江省",
-        "dynasty": "唐"
+        "dynasty": "唐",
+        "coordinates": [120.1538, 30.2877]
     },
     {
         "name": "练湖",
         "province": "江苏省",
-        "dynasty": "唐"
+        "dynasty": "唐",
+        "coordinates": [118.7678, 32.0419]
     },
     {
         "name": "相思埭",
         "province": "广西壮族自治区",
-        "dynasty": "唐"
+        "dynasty": "唐",
+        "coordinates": [110.2985, 25.2750]
     },
     {
         "name": "钱塘海塘工程",
         "province": "浙江省",
-        "dynasty": "五代十国"
+        "dynasty": "五代十国",
+        "coordinates": [120.1540, 30.2881]
     },
     {
         "name": "芍陂",
         "province": "安徽省",
-        "dynasty": "五代十国"
+        "dynasty": "五代十国",
+        "coordinates": [117.2832, 31.8614]
     },
     {
         "name": "木兰陂",
         "province": "福建省",
-        "dynasty": "宋"
+        "dynasty": "宋",
+        "coordinates": [119.3062, 26.0753]
     },
     {
         "name": "通惠河",
         "province": "北京市",
-        "dynasty": "元"
+        "dynasty": "元",
+        "coordinates": [116.4074, 39.9042]
     },
     {
         "name": "戴村坝",
         "province": "山东省",
-        "dynasty": "明"
+        "dynasty": "明",
+        "coordinates": [116.5871, 35.4050]
     }
 ]
