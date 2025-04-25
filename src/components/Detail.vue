@@ -1,9 +1,15 @@
 <template>
-  <div class="detail-container">
+  <div class="detail-container custom-font">
     <!-- 顶部标题栏 -->
     <div class="title-bar flex items-center px-4">
-      <button @click="goBack" class="back-button mr-4">返回主页</button>
-      <h1 class="text-xl font-bold">{{ province }} 水利工程详情</h1>
+      <div class="absolute left-14">
+        <button @click="goBack" class="back-button"></button>
+      </div>
+      <div class="w-full flex justify-center">
+        <div class="transform translate-x-5">
+          <h1 class="text-5xl font-bold">{{ province }}</h1>
+        </div>
+      </div>
     </div>
 
     <!-- 下方五格区域 -->
@@ -26,6 +32,7 @@
 
 <script setup>
 import { useRouter } from 'vue-router';
+import { ref, onMounted } from 'vue';
 
 const props = defineProps({
   province: {
@@ -42,13 +49,26 @@ const goBack = () => {
 </script>
 
 <style scoped>
+@font-face {
+  font-family: 'DianShuXiaoLiTi';
+  src: url('../assets/font/点书小隶体.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.custom-font {
+  font-family: 'DianShuXiaoLiTi', sans-serif;
+}
+
 .detail-container {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.95);
+  background: url('../assets/img/bg.png');
+  background-size: cover;
+  background-position: center;
   z-index: 100;
   padding: 20px;
   box-sizing: border-box;
@@ -58,21 +78,24 @@ const goBack = () => {
 
 .title-bar {
   height: 10%;
-  background-color: #eef2f3;
-  border-bottom: 1px solid #ccc;
+  background-color: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 1);
+  border-radius: 8px;
 }
 
 .back-button {
   padding: 6px 12px;
-  background: #42b983;
-  color: white;
+  background: transparent;
+  color: transparent;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  width: 40px;
+  height: 40px;
 }
 
 .back-button:hover {
-  background: #3aa876;
+  background: transparent;
 }
 
 .content-area {
@@ -82,7 +105,9 @@ const goBack = () => {
 
 .box {
   height: 100%;
-  border: 2px solid red;
-  background-color: #f9f9f9;
+  border: 1px solid rgba(255, 255, 255, 1);
+  background-color: transparent;
+  border-radius: 8px;
+  padding: 10px;
 }
 </style>

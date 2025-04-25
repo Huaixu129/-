@@ -1,15 +1,22 @@
 <template lang="">
-  <div ref="chartContainer" style="width: 100%; height: 100%; position: relative;">
+  <div ref="chartContainer" class="chart-container">
+    <!-- 使用绝对定位的tooltip -->
     <div 
-      v-show="showTooltip" 
-      class="custom-tooltip" 
-      :style="{ left: tooltipPosition.x + 'px', top: tooltipPosition.y + 'px' }"
+      v-if="showTooltip" 
+      class="tooltip-container"
+      :style="{
+        left: tooltipPosition.x + 'px',
+        top: tooltipPosition.y + 'px'
+      }"
     >
-      <div class="tooltip-title">{{ tooltipInfo.name }}</div>
-      <div class="tooltip-content">朝代：{{ tooltipInfo.dynasty }}</div>
+      <div class="tooltip-inner">
+        <div class="tooltip-title">{{ tooltipInfo.name }}</div>
+        <div class="tooltip-content">朝代：{{ tooltipInfo.dynasty }}</div>
+      </div>
     </div>
   </div>
 </template>
+
 <script setup>
 import mapJson from "../assets/map/china.json";
 import { onMounted, ref, inject, watch, reactive } from "vue";
@@ -39,6 +46,8 @@ onMounted(() => {
   window.addEventListener("resize", () => {
     chart.value.resize();
   });
+  
+  console.log("地图组件已挂载");
 });
 
 // 监听朝代变化并重新渲染地图
@@ -130,81 +139,104 @@ const renderChart = () => {
 
   chart.value.setOption(options);
   
-  // 点击事件
+  // 移除所有旧事件
+  chart.value.off('mouseover');
+  chart.value.off('mouseout');
+  chart.value.off('mousemove');
+  if (chart.value.getZr()) {
+    chart.value.getZr().off('mousemove');
+  }
+  
+  // 重新添加事件处理
   chart.value.on('click', 'series.scatter', (params) => {
-    console.log('点击参数:', params);
     if (params && params.name) {
       router.push({ path: '/detail', query: { province: params.name } });
-    } else {
-      console.error('无效的点击参数:', params);
     }
   });
 
-  // 添加鼠标悬浮事件 - 使用自定义tooltip
   chart.value.on('mouseover', 'series.scatter', (params) => {
     if (params && params.name) {
+      // 更新悬浮项目状态
       hoveredProject.value = params.name;
       
-      // 显示自定义tooltip
+      // 更新tooltip内容
       tooltipInfo.name = params.name;
       tooltipInfo.dynasty = params.data.dynasty;
-      tooltipPosition.x = params.event.offsetX + 15;
-      tooltipPosition.y = params.event.offsetY + 15;
+      
+      // 计算tooltip位置
+      tooltipPosition.x = params.event.offsetX + 20;
+      tooltipPosition.y = params.event.offsetY - 10;
+      
+      // 显示tooltip
       showTooltip.value = true;
       
-      console.log("显示tooltip:", params.name, tooltipPosition.x, tooltipPosition.y);
+      console.log('显示tooltip:', params.name, tooltipPosition.x, tooltipPosition.y);
     }
   });
   
-  // 添加鼠标移动事件 - 更新tooltip位置
+  chart.value.on('mouseout', 'series.scatter', () => {
+    // 清除悬浮项目状态
+    hoveredProject.value = null;
+    
+    // 隐藏tooltip
+    showTooltip.value = false;
+    
+    console.log('隐藏tooltip');
+  });
+  
   chart.value.on('mousemove', 'series.scatter', (params) => {
     if (showTooltip.value) {
-      tooltipPosition.x = params.event.offsetX + 15;
-      tooltipPosition.y = params.event.offsetY + 15;
+      // 更新tooltip位置
+      tooltipPosition.x = params.event.offsetX + 20;
+      tooltipPosition.y = params.event.offsetY - 10;
     }
   });
   
-  // 添加鼠标离开事件
-  chart.value.on('mouseout', 'series.scatter', () => {
-    hoveredProject.value = null;
-    showTooltip.value = false;
-  });
-  
-  // 添加全局鼠标移动监听，确保在非标点区域鼠标移动时隐藏tooltip
-  chart.value.getZr().on('mousemove', (e) => {
-    // 获取鼠标下是否有图表元素
-    const findResult = chart.value.containPixel('series', [e.offsetX, e.offsetY]);
-    if (!findResult) {
+  // 处理地图空白区域点击
+  chart.value.getZr().on('click', function(event) {
+    const pointInPixel = [event.offsetX, event.offsetY];
+    if (!chart.value.containPixel('series', pointInPixel)) {
+      // 点击了非标记点区域
       showTooltip.value = false;
     }
   });
 };
 </script>
-<style>
-.custom-tooltip {
+
+<style scoped>
+.chart-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: visible;
+}
+
+.tooltip-container {
   position: absolute;
-  background-color: rgba(255, 255, 255, 0.2);
-  border: 1px solid #ccc;
-  border-radius: 2px;
-  padding: 4px 8px;
-  pointer-events: none;
   z-index: 9999;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  font-size: 12px;
-  min-width: 60px;
-  text-align: center;
+  pointer-events: none;
+}
+
+.tooltip-inner {
+  background-color: rgba(50, 50, 50, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  padding: 8px 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  min-width: 120px;
 }
 
 .tooltip-title {
+  color: #fff;
+  font-size: 14px;
   font-weight: bold;
-  margin-bottom: 3px;
-  font-size: 12px;
-  color: #333;
+  margin-bottom: 5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding-bottom: 3px;
 }
 
 .tooltip-content {
-  padding: 0;
-  color: #333;
+  color: #ddd;
   font-size: 12px;
 }
 </style>

@@ -1,6 +1,11 @@
 <template lang="">
   <div class="image-container">
-    <img :src="currentImageSrc" alt="水利工程图片" class="project-image" />
+    <div class="image-frame">
+      <div class="image-title" v-if="hoveredProject.value">
+        {{ hoveredProject.value }}
+      </div>
+      <img :src="currentImageSrc" alt="水利工程图片" class="project-image" />
+    </div>
   </div>
 </template>
 <script setup>
@@ -35,11 +40,30 @@ const currentImageSrc = computed(() => {
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  padding: 8px;
+}
+
+.image-frame {
+  border: 2px dashed rgba(128, 128, 128, 0.6);
+  border-radius: 5px;
+  padding: 15px;
+  width: 90%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image-title {
+  font-size: 16px;
+  color: rgba(200, 200, 200, 0.9);
+  margin-bottom: 10px;
+  text-align: center;
 }
 
 .project-image {
   max-width: 100%;
-  max-height: 100%;
+  max-height: 85%;
   object-fit: contain;
 }
 </style>
