@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>郑国渠知识图谱</title>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    #chart {
+      width: 80%;
+      height: 600px;
+      margin: 0 auto;
+    }
+    #info-panel {
+      width: 80%;
+      height: 100px;
+      margin: 10px auto;
+      border: 1px solid #ccc;
+      padding: 10px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center;">郑国渠知识图谱</h1>
+  <div id="chart"></div>
+  <div id="info-panel"></div>
+  <script>
+    var chartDom = document.getElementById('chart');
+    var myChart = echarts.init(chartDom);
+    var option;
+
+    var nodes = [
+      { name: '郑国渠', category: 0 },
+      { name: '建造要素', category: 1 },
+      { name: '工程技术', category: 1 },
+      { name: '历史意义', category: 1 },
+      { name: '当代状况', category: 1 },
+      { name: 'BC246年', category: 2 },
+      { name: '泾河北岸', category: 2 },
+      { name: '郑国', category: 2 },
+      { name: '韩谋疲秦', category: 2 },
+      { name: '平原地势', category: 2 },
+      { name: '有坝引水', category: 2 },
+      { name: '引洪淤灌', category: 2 },
+      { name: '农业增产', category: 2 },
+      { name: '经济带动', category: 2 },
+      { name: '技术传承', category: 2 },
+      { name: '遗址保护', category: 2 },
+      { name: '文旅发展', category: 2 },
+      { name: '水利融合', category: 2 }
+    ];
+
+    var links = [
+      { source: '郑国渠', target: '建造要素', label: '包含' },
+      { source: '郑国渠', target: '工程技术', label: '运用' },
+      { source: '郑国渠', target: '历史意义', label: '具有' },
+      { source: '郑国渠', target: '当代状况', label: '呈现' },
+      { source: '建造要素', target: 'BC246年', label: '始建时间' },
+      { source: '建造要素', target: '泾河北岸', label: '地理位置' },
+      { source: '建造要素', target: '郑国', label: '主持建造' },
+      { source: '建造要素', target: '韩谋疲秦', label: '背景' },
+      { source: '建造要素', target: '平原地势', label: '优势' },
+      { source: '工程技术', target: '有坝引水', label: '关键技术' },
+      { source: '工程技术', target: '引洪淤灌', label: '灌溉方式' },
+      { source: '历史意义', target: '农业增产', label: '促进' },
+      { source: '历史意义', target: '经济带动', label: '推动' },
+      { source: '历史意义', target: '技术传承', label: '传承' },
+      { source: '当代状况', target: '遗址保护', label: '保护' },
+      { source: '当代状况', target: '文旅发展', label: '带动' },
+      { source: '当代状况', target: '水利融合', label: '发展' }
+    ];
+
+    function getNodeInfo(name) {
+      var info = '';
+      switch(name) {
+        case '韩谋疲秦':
+          info = '韩国为削弱秦国，派郑国提议修渠，消耗秦资源以延缓伐韩。';
+          break;
+        case '平原地势':
+          info = '位于关中平原，地势平坦，利于引泾水灌溉。';
+          break;
+        case '当代状况':
+          info = '涉及遗址保护、文旅发展和水利融合。';
+          break;
+        case '郑国渠': 
+          info = '位于陕西泾阳，是古代著名水利工程。';
+          break;
+        case '建造要素':
+          info = '涵盖时间、地点、主持者、背景和选址优势。';
+          break;
+        case '工程技术':
+          info = '采用有坝引水和引洪淤灌技术。';  
+          break;
+        case '有坝引水':
+          info = '取水口在凹岸，减少泥沙淤积。';  
+          break;
+        case '引洪淤灌':
+          info = '洪水期引泾水，泥沙肥田并漫灌。';  
+          break;
+        case '农业增产':
+          info = '灌溉280多万亩土地，提高粮食产量。';  
+          break;
+        case '经济带动':
+          info = '促进农业经济，带动相关产业发展。';
+          break;
+        case '技术传承':
+          info = '影响后世水利工程建设，如白公渠等。';
+          break;
+        case '遗址保护':
+          info = '1996年列为国保单位，2016年入选世灌遗产。';
+          break;
+        case '文旅发展':
+          info = '周边发展文旅，吸引游客和学者参观。';
+          break;
+        case '水利融合':
+          info = '与现代水利设施融合，促进地区发展。';
+          break;
+        case 'BC246年':
+          info = '秦王政元年开始兴建。';
+          break;
+        case '泾河北岸':
+          info = '渠首在泾阳县西北25公里泾河北岸。';
+          break;
+        case '郑国':
+          info = '由韩国水工郑国主持修建。';
+          break;
+      }
+      return info;
+    }
+
+    option = {
+      tooltip: {
+        trigger: 'item',
+        formatter: function(params) {
+          if (params.dataType === 'edge') {
+            return params.data.label;
+          }
+          return params.data.name + '<br/>' + getNodeInfo(params.data.name);
+        }
+      },
+      series: [
+        {
+          type: 'graph',
+          layout: 'force',
+          data: nodes,
+          links: links,
+          categories: [
+            { name: '中心节点' },
+            { name: '一级节点' },
+            { name: '二级节点' }
+          ],
+          roam: true,
+          label: {
+            show: true,
+            position: 'inside'
+          },
+          force: {
+            initLayout: 'circular',
+            repulsion: 2000,
+            edgeLength: [50, 100],
+            gravity: 0.5
+          },
+          lineStyle: {
+            color: 'source',
+            curveness: 0.3
+          },
+          symbolSize: 65,
+          edgeLabel: {
+            show: true,
+            formatter: function (params) {
+              return params.data.label;
+            }
+          }
+        }
+      ]
+    };
+
+    myChart.setOption(option);
+
+    myChart.on('mouseover', function(params) {
+      if (params.dataType === 'node') {
+        var infoPanel = document.getElementById('info-panel');
+        infoPanel.innerHTML = params.data.name + '<br/>' + getNodeInfo(params.data.name);
+        infoPanel.style.display = 'block';
+      }
+    });
+
+    myChart.on('mouseout', function() {
+      var infoPanel = document.getElementById('info-panel');
+      infoPanel.style.display = 'none';
+    });
+  </script>
+</body>
+</html>
+    

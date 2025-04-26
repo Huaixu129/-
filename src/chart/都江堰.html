@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>都江堰知识图谱</title>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    #chart {
+      width: 80%;
+      height: 600px;
+      margin: 0 auto;
+    }
+    #info-panel {
+      width: 80%;
+      height: 100px;
+      margin: 10px auto;
+      border: 1px solid #ccc;
+      padding: 10px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center;">都江堰知识图谱</h1>
+  <div id="chart"></div>
+  <div id="info-panel"></div>
+  <script>
+    var chartDom = document.getElementById('chart');
+    var myChart = echarts.init(chartDom);
+    var option;
+
+    var nodes = [
+      { name: '都江堰', category: 0 },
+      { name: '建造要素', category: 1 },
+      { name: '工程结构', category: 1 },
+      { name: '历史价值', category: 1 },
+      { name: '当代发展', category: 1 },
+      { name: 'BC256 - 251', category: 2 },
+      { name: '成都岷江', category: 2 },
+      { name: '李冰父子', category: 2 },
+      { name: '冲积扇顶', category: 2 },
+      { name: '治水兴农', category: 2 },
+      { name: '渠首三系', category: 2 },
+      { name: '灌溉网络', category: 2 },
+      { name: '鱼嘴分洪', category: 3 },
+      { name: '飞沙排沙', category: 3 },
+      { name: '宝瓶控水', category: 3 },
+      { name: '天府粮仓', category: 3 },
+      { name: '商贸兴盛', category: 3 },
+      { name: '世遗瑰宝', category: 3 },
+      { name: '智能灌溉', category: 3 },
+      { name: '水利旅游', category: 3 },
+      { name: '生态平衡', category: 3 }
+    ];
+
+    // 边数据
+    var links = [
+      { source: '都江堰', target: '建造要素', label: '包含' },
+      { source: '都江堰', target: '工程结构', label: '构成' },
+      { source: '都江堰', target: '历史价值', label: '影响' },
+      { source: '都江堰', target: '当代发展', label: '现状' },
+      { source: '建造要素', target: 'BC256 - 251', label: '建造时间' },
+      { source: '建造要素', target: '成都岷江', label: '地理位置' },
+      { source: '建造要素', target: '李冰父子', label: '主持建造' },
+      { source: '建造要素', target: '冲积扇顶', label: '选址优势' },
+      { source: '建造要素', target: '治水兴农', label: '建造背景' },
+      { source: '工程结构', target: '渠首三系', label: '核心组件' },
+      { source: '工程结构', target: '灌溉网络', label: '配套网络' },
+      { source: '渠首三系', target: '鱼嘴分洪', label: '分水枢纽' },
+      { source: '渠首三系', target: '飞沙排沙', label: '排沙系统' },
+      { source: '渠首三系', target: '宝瓶控水', label: '控水关键' },
+      { source: '历史价值', target: '农业变革', label: '农业价值' },
+      { source: '历史价值', target: '天府粮仓', label: '造就天府' },
+      { source: '历史价值', target: '商贸兴盛', label: '促进商贸' },
+      { source: '历史价值', target: '世遗瑰宝', label: '文化传承' },
+      { source: '当代发展', target: '智能灌溉', label: '灌溉现状' },
+      { source: '当代发展', target: '水利旅游', label: '旅游发展' },
+      { source: '当代发展', target: '生态平衡', label: '生态保护' }
+    ];
+
+    // 获取详细信息的函数
+    function getNodeInfo(name) {
+      var info = '';
+      switch(name) {
+        case '治水兴农':
+          info = '战国时期秦国为统一大业，通过修建都江堰解决蜀地水患并发展农业保障后勤供应';
+          break;
+        case '冲积扇顶':
+          info = '位于成都平原冲积扇顶部，地势西北高东南低，可自流灌溉整个成都平原';
+          break;
+        case '当代发展':
+          info = '当前发展涵盖智能灌溉系统、水利文化旅游和生态保护工程三大领域';
+          break;
+        case '世遗瑰宝':
+          info = '2000年被联合国教科文组织列入世界文化遗产，2018年列入世界灌溉工程遗产';
+          break;
+        case '水利旅游':
+          info = '年均接待游客超800万人次，含伏龙观、二王庙、安澜索桥等文化景点';
+          break;
+        case '智能灌溉':
+          info = '覆盖7市38县，灌溉面积达1130万亩，采用物联网技术实现精准配水';
+          break;
+        case '都江堰': 
+          info = '都江堰位于四川省成都市都江堰市，是世界遗产和世界自然遗产。';
+          break;
+        case '建造要素':
+          info = '建造要素包括时间、地理位置、建造者、选址优势和建造背景。';
+          break;
+        case '工程结构':
+          info = '工程结构包含渠首三系和灌溉网络两大子系统';  
+          break;
+        case '渠首三系':
+          info = '包括鱼嘴分洪、飞沙排沙、宝瓶控水三大核心组件';  
+          break;
+        case '天府粮仓':
+          info = '有效控制水患，使成都平原成为"天府之国"';  
+          break;
+        case '历史价值':
+          info = '历史意义包括农业变革、经济繁荣和文化传承。';
+          break;
+        case '当代发展':
+          info = '现状包括灌溉、旅游胜地和生态保护。';
+          break;
+        case 'BC256 - 251':
+          info = '秦昭王末年（约公元前256—前251年）。';
+          break;
+        case '成都岷江':
+          info = '位于成都平原西部岷江上，城市为四川省成都市都江堰市城西。';
+          break;
+        case '李冰父子':
+          info = '蜀郡太守李冰父子。';
+          break;
+        case '选址优势':
+          info = '位于成都平原冲积扇顶部，地势西北高、东南低，利于自流灌溉成都平原。';
+          break;
+        case '建造背景':
+          info = '战国时期，秦国为统一大业，解决蜀地水患并发展农业以保障后勤供应而修建。';
+          break;
+        case '渠首工程':
+          info = '包括鱼嘴分水堤、飞沙堰溢洪排沙工程和宝瓶口引水工程。';
+          break;
+        case '灌溉网络':
+          info = '由干渠、支渠、斗渠组成的复杂灌溉网络';
+          break;
+        case '鱼嘴分洪':
+          info = '分水排洪，利用弯道环流，冬春内江进水60%，夏秋外江进水60%。';
+          break;
+        case '飞沙排沙':
+          info = '溢洪、排沙，长200米，高2.15米，洪水期自动排泄多余水量，排沙率75%。';
+          break;
+        case '宝瓶控水':
+          info = '控制水量，人工凿开玉垒山岩体，宽20.4米，高18.8米，限制水流，壅高水面，增强排洪效果。';
+          break;
+        case '农业变革':
+          info = '有效控制水患，使成都平原成为“天府之国”，灌溉面积扩大，提高农业产量，奠定农业产区地位。';
+          break;
+        case '商贸兴盛':
+          info = '带动手工业、商业发展，促进地区经济繁荣，增加财政收入，推动城市兴起和发展。';
+          break;
+        case '世遗瑰宝':
+          info = '是世界遗产、世界自然遗产等，蕴含的治水智慧影响后世水利工程建设和文化发展，凝聚民族精神。';
+          break;
+        case '智能灌溉':
+          info = '至今为成都平原提供稳定水源，不断维护升级，提高灌溉效率和水资源利用率。';
+          break;
+        case '水利旅游':
+          info = '每年吸引大量游客，景区内人文景观与自然景观融合，传承水文化，举办放水节和二王庙庙会活动。';
+          break;
+        case '生态平衡':
+          info = '注重水利工程与生态环境协调发展，维护区域生态平衡，保障河流生态系统稳定。';
+          break;
+      }
+      return info;
+    }
+
+    option = {
+      tooltip: {
+        trigger: 'item',
+        formatter: function(params) {
+          if (params.dataType === 'edge') {
+            return params.data.label;
+          }
+          return params.data.name + '<br/>' + getNodeInfo(params.data.name);
+        }
+      },
+      series: [
+        {
+          type: 'graph',
+          layout: 'force',
+          data: nodes,
+          links: links,
+          categories: [
+            { name: '中心节点' },
+            { name: '一级节点' },
+            { name: '二级节点' }
+          ],
+          roam: true,
+          label: {
+            show: true,
+            position: 'inside'
+          },
+          force: {
+            initLayout: 'circular',
+            repulsion: 2000,
+            edgeLength: [50, 100],
+            gravity: 0.5
+          },
+          lineStyle: {
+            color: 'source',
+            curveness: 0.3
+          },
+          symbolSize: 65,
+          edgeLabel: {
+            show: true,
+            formatter: function (params) {
+              return params.data.label;
+            }
+          }
+        }
+      ]
+    };
+
+    myChart.setOption(option);
+
+    myChart.on('mouseover', function(params) {
+      if (params.dataType === 'node') {
+        var infoPanel = document.getElementById('info-panel');
+        infoPanel.innerHTML = params.data.name + '<br/>' + getNodeInfo(params.data.name);
+        infoPanel.style.display = 'block';
+      }
+    });
+
+    myChart.on('mouseout', function() {
+      var infoPanel = document.getElementById('info-panel');
+      infoPanel.style.display = 'none';
+    });
+  </script>
+</body>
+</html>
+    

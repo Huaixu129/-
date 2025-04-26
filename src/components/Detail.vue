@@ -16,36 +16,38 @@
     <div class="content-area flex flex-col justify-between h-[90%]">
       <!-- 上三格 -->
       <div class="flex justify-between h-[48%]">
-        <div class="box w-[32%]">
+        <div class="box w-[32%] left-top-box"></div>
+        <div class="box w-[32%] chart-box">
+          <KnowledgeGraph :projectName="province" />
         </div>
-        <div class="box w-[32%]"></div>
-        <div class="box w-[32%]"></div>
+        <div class="box w-[32%] right-top-box"></div>
       </div>
 
       <!-- 下两格 -->
       <div class="flex justify-between h-[48%]">
-        <div class="box w-[48%]"></div>
-        <div class="box w-[48%]"></div>
+        <div class="box w-[48%] left-bottom-box"></div>
+        <div class="box w-[48%] right-bottom-box"></div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router';
-import { ref, onMounted } from 'vue';
+import { useRouter } from "vue-router";
+import { ref, onMounted } from "vue";
+import KnowledgeGraph from "./KnowledgeGraph.vue";
 
 const props = defineProps({
   province: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 });
 
 const router = useRouter();
 
 const goBack = () => {
-  router.push('/');
+  router.push("/");
 }; // 调试用
 </script>
 
@@ -65,7 +67,7 @@ const goBack = () => {
   left: 0;
   width: 100%;
   height: 100%;
-  background: url('../assets/img/bg.png');
+  background: url("../assets/img/bg.png");
   background-size: cover;
   background-position: center;
   z-index: 100;
@@ -105,10 +107,46 @@ const goBack = () => {
 
 .box {
   height: 100%;
-  border: 1px solid rgba(255, 255, 255, 1);
+  border: 1px solid rgba(255, 255, 255, 0);
   background-color: transparent;
   border-radius: 8px;
   padding: 10px;
+}
+
+.left-top-box {
+  background-image: url("../assets/img/leftTop.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 0;
+  border: none;
+}
+
+.right-top-box {
+  background-image: url("../assets/img/rightTop.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 0;
+  border: none;
+}
+
+.left-bottom-box {
+  background-image: url("../assets/img/leftBottom.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 0;
+  border: none;
+}
+
+.right-bottom-box {
+  background-image: url("../assets/img/rightBottom.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 0;
+  border: none;
 }
 
 .detail-title {
@@ -117,5 +155,15 @@ const goBack = () => {
 
 .detail-content {
   font-family: "点书小隶体", sans-serif;
+}
+
+.chart-box {
+  overflow: hidden;
+  position: relative;
+  padding: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
