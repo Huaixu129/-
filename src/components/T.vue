@@ -1,6 +1,6 @@
 <template>
   <div class="image-container">
-    <img src="../assets/img/title.png" alt="示例图片" class="full-image" />
+    
   </div>
 </template>
 

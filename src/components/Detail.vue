@@ -16,7 +16,8 @@
     <div class="content-area flex flex-col justify-between h-[90%]">
       <!-- 上三格 -->
       <div class="flex justify-between h-[48%]">
-        <div class="box w-[32%]"></div>
+        <div class="box w-[32%]">
+        </div>
         <div class="box w-[32%]"></div>
         <div class="box w-[32%]"></div>
       </div>
@@ -48,16 +49,14 @@ const goBack = () => {
 }; // 调试用
 </script>
 
-<style scoped>
+<style>
 @font-face {
-  font-family: 'DianShuXiaoLiTi';
-  src: url('../assets/font/点书小隶体.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
+  font-family: "点书小隶体";
+  src: url("../assets/font/点书小隶体.ttf") format("truetype");
 }
 
 .custom-font {
-  font-family: 'DianShuXiaoLiTi', sans-serif;
+  font-family: "点书小隶体", sans-serif;
 }
 
 .detail-container {
@@ -74,6 +73,7 @@ const goBack = () => {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  font-family: "点书小隶体", sans-serif;
 }
 
 .title-bar {
@@ -109,5 +109,13 @@ const goBack = () => {
   background-color: transparent;
   border-radius: 8px;
   padding: 10px;
+}
+
+.detail-title {
+  font-family: "点书小隶体", sans-serif;
+}
+
+.detail-content {
+  font-family: "点书小隶体", sans-serif;
 }
 </style>

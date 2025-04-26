@@ -55,5 +55,6 @@ onMounted(() => {
   height: 100%;
   padding: 0;
   margin: 0;
+  font-family: "点书小隶体", sans-serif;
 }
 </style>

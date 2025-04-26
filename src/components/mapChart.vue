@@ -1,22 +1,19 @@
 <template lang="">
-  <div ref="chartContainer" class="chart-container">
-    <!-- 使用绝对定位的tooltip -->
+  <div ref="chartContainer" style="width: 100%; height: 100%; position: relative;">
     <div 
-      v-if="showTooltip" 
-      class="tooltip-container"
-      :style="{
-        left: tooltipPosition.x + 'px',
-        top: tooltipPosition.y + 'px'
+      v-show="showTooltip" 
+      class="custom-tooltip" 
+      :style="{ 
+        left: tooltipPosition.x + 'px', 
+        top: tooltipPosition.y + 'px',
+        transform: 'translate(10px, -50%)'
       }"
     >
-      <div class="tooltip-inner">
-        <div class="tooltip-title">{{ tooltipInfo.name }}</div>
-        <div class="tooltip-content">朝代：{{ tooltipInfo.dynasty }}</div>
-      </div>
+      <div class="tooltip-title">{{ tooltipInfo.name }}</div>
+      <div class="tooltip-content">朝代：{{ tooltipInfo.dynasty }}</div>
     </div>
   </div>
 </template>
-
 <script setup>
 import mapJson from "../assets/map/china.json";
 import { onMounted, ref, inject, watch, reactive } from "vue";
@@ -35,7 +32,11 @@ const hoveredProject = inject('hoveredProject');
 // 自定义tooltip状态
 const showTooltip = ref(false);
 const tooltipPosition = reactive({ x: 0, y: 0 });
-const tooltipInfo = reactive({ name: '', dynasty: '' });
+const tooltipInfo = reactive({ 
+  name: '', 
+  dynasty: '',
+  province: ''
+});
 
 onMounted(() => {
   echarts.registerMap("china", mapJson);
@@ -46,8 +47,6 @@ onMounted(() => {
   window.addEventListener("resize", () => {
     chart.value.resize();
   });
-  
-  console.log("地图组件已挂载");
 });
 
 // 监听朝代变化并重新渲染地图
@@ -67,8 +66,15 @@ const renderChart = () => {
   const mapData = filteredProjects.map(project => ({
     name: project.name,
     value: project.coordinates,
-    province: project.province,
-    dynasty: project.dynasty
+    itemStyle: {
+      color: '#1E90FF'
+    },
+    // 添加额外的数据字段
+    data: {
+      name: project.name,
+      dynasty: project.dynasty,
+      province: project.province
+    }
   }));
 
   const options = {
@@ -105,12 +111,15 @@ const renderChart = () => {
           show: true,
           color: "#fff",
           fontWeight: "bold",
+          fontSize: 16,
+          fontFamily: "点书小隶体"
         },
       },
       label: {
         show: true,
         color: "#3a3d49",
-        fontSize: 10,
+        fontSize: 14,
+        fontFamily: "点书小隶体"
       },
       tooltip: {
         show: false
@@ -128,6 +137,14 @@ const renderChart = () => {
           scaleSize: 25,
           itemStyle: {
             color: '#fff'
+          },
+          label: {
+            show: true,
+            formatter: '{b}',
+            fontFamily: "点书小隶体",
+            fontSize: 18,
+            fontWeight: 'bold',
+            color: 'rgb(237, 18, 66)'
           }
         },
         tooltip: {
@@ -139,104 +156,104 @@ const renderChart = () => {
 
   chart.value.setOption(options);
   
-  // 移除所有旧事件
-  chart.value.off('mouseover');
-  chart.value.off('mouseout');
-  chart.value.off('mousemove');
-  if (chart.value.getZr()) {
-    chart.value.getZr().off('mousemove');
-  }
-  
-  // 重新添加事件处理
+  // 点击事件
   chart.value.on('click', 'series.scatter', (params) => {
+    console.log('点击参数:', params);
     if (params && params.name) {
       router.push({ path: '/detail', query: { province: params.name } });
+    } else {
+      console.error('无效的点击参数:', params);
     }
   });
 
+  // 添加鼠标悬浮事件 - 使用自定义tooltip
   chart.value.on('mouseover', 'series.scatter', (params) => {
-    if (params && params.name) {
-      // 更新悬浮项目状态
+    console.log('鼠标悬浮参数:', params);
+    if (params && params.data) {
+      console.log('工程数据:', params.data);
       hoveredProject.value = params.name;
       
-      // 更新tooltip内容
-      tooltipInfo.name = params.name;
-      tooltipInfo.dynasty = params.data.dynasty;
+      // 从原始数据中查找对应的工程信息
+      const projectInfo = waterProjects.find(project => project.name === params.name);
+      console.log('查找到的工程信息:', projectInfo);
       
-      // 计算tooltip位置
-      tooltipPosition.x = params.event.offsetX + 20;
-      tooltipPosition.y = params.event.offsetY - 10;
+      // 更新tooltip信息
+      Object.assign(tooltipInfo, {
+        name: projectInfo?.name || params.name,
+        dynasty: projectInfo?.dynasty || '未知朝代',
+        province: projectInfo?.province || '未知省份'
+      });
       
-      // 显示tooltip
+      // 更新tooltip位置
+      tooltipPosition.x = params.event.offsetX;
+      tooltipPosition.y = params.event.offsetY;
       showTooltip.value = true;
-      
-      console.log('显示tooltip:', params.name, tooltipPosition.x, tooltipPosition.y);
     }
   });
   
-  chart.value.on('mouseout', 'series.scatter', () => {
-    // 清除悬浮项目状态
-    hoveredProject.value = null;
-    
-    // 隐藏tooltip
-    showTooltip.value = false;
-    
-    console.log('隐藏tooltip');
-  });
-  
+  // 添加鼠标移动事件 - 更新tooltip位置
   chart.value.on('mousemove', 'series.scatter', (params) => {
     if (showTooltip.value) {
-      // 更新tooltip位置
-      tooltipPosition.x = params.event.offsetX + 20;
-      tooltipPosition.y = params.event.offsetY - 10;
+      tooltipPosition.x = params.event.offsetX;
+      tooltipPosition.y = params.event.offsetY;
     }
   });
   
-  // 处理地图空白区域点击
-  chart.value.getZr().on('click', function(event) {
-    const pointInPixel = [event.offsetX, event.offsetY];
-    if (!chart.value.containPixel('series', pointInPixel)) {
-      // 点击了非标记点区域
+  // 添加鼠标离开事件
+  chart.value.on('mouseout', 'series.scatter', () => {
+    hoveredProject.value = null;
+    showTooltip.value = false;
+  });
+  
+  // 添加全局鼠标移动监听，确保在非标点区域鼠标移动时隐藏tooltip
+  chart.value.getZr().on('mousemove', (e) => {
+    const findResult = chart.value.containPixel('series', [e.offsetX, e.offsetY]);
+    if (!findResult) {
       showTooltip.value = false;
     }
   });
 };
 </script>
-
-<style scoped>
-.chart-container {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  overflow: visible;
+<style>
+@font-face {
+  font-family: "点书小隶体";
+  src: url("../assets/font/点书小隶体.ttf") format("truetype");
 }
 
-.tooltip-container {
-  position: absolute;
-  z-index: 9999;
+.custom-tooltip {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 12px 18px;
   pointer-events: none;
-}
-
-.tooltip-inner {
-  background-color: rgba(50, 50, 50, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 4px;
-  padding: 8px 12px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
-  min-width: 120px;
+  z-index: 9999;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  font-size: 16px;
+  min-width: 180px;
+  text-align: left;
+  color: #fff;
+  backdrop-filter: blur(4px);
+  font-family: "点书小隶体", sans-serif;
+  transition: all 0.1s ease;
 }
 
 .tooltip-title {
-  color: #fff;
-  font-size: 14px;
   font-weight: bold;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
+  font-size: 20px;
+  color: #fff;
+  font-family: "点书小隶体", sans-serif;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  padding-bottom: 3px;
+  padding-bottom: 6px;
 }
 
 .tooltip-content {
-  color: #ddd;
-  font-size: 12px;
+  padding: 0;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 18px;
+  font-family: "点书小隶体", sans-serif;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 </style>

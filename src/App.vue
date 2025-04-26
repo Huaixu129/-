@@ -75,7 +75,7 @@ provide('hoveredProject', hoveredProject);
 }
 
 body {
-  font-family: "Arial", sans-serif;
+  font-family: "点书小隶体", sans-serif;
   padding: 20px;
 }
 
@@ -112,16 +112,19 @@ body {
 .chart-left-top {
   grid-column: 1 / 2;
   grid-row: 1 / 8;
+    border: 2px solid #d86a5a;
+
 }
 
 .images {
   grid-column: 1 / 2;
   grid-row: 8 / 15;
+
 }
 
 .map {
   grid-column: 2 / 3;
-  grid-row: 4 / 14;
+  grid-row: 3 / 14;
 }
 
 .timeline {
