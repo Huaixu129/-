@@ -158,7 +158,7 @@ const goBack = () => {
 }
 
 .chart-box {
-  overflow: hidden;
+  overflow: visible;
   position: relative;
   padding: 0;
   z-index: 10;

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>木兰陂知识图谱</title>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    #chart {
+      width: 80%;
+      height: 600px;
+      margin: 0 auto;
+    }
+    #info-panel {
+      width: 80%;
+      height: 100px;
+      margin: 10px auto;
+      border: 1px solid #ccc;
+      padding: 10px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center;">木兰陂知识图谱</h1>
+  <div id="chart"></div>
+  <div id="info-panel"></div>
+  <script>
+    var chartDom = document.getElementById('chart');
+    var myChart = echarts.init(chartDom);
+    var option;
+
+    var nodes = [
+      { name: '木兰陂', category: 0 },
+      { name: '历史沿革', category: 1 },
+      { name: '工程结构', category: 1 },
+      { name: '相关人物', category: 1 },
+      { name: '历史地位', category: 1 },
+      { name: '首次筑陂', category: 2 },
+      { name: '二次筑陂', category: 2 },
+      { name: '三次筑陂', category: 2 },
+      { name: '陂首枢纽', category: 2 },
+      { name: '渠系工程', category: 2 },
+      { name: '堤防工程', category: 2 },
+      { name: '钱四娘', category: 2 },
+      { name: '冯智日', category: 2 },
+      { name: '李宏', category: 2 },
+      { name: '工程价值', category: 2 }
+    ];
+
+    var links = [
+      { source: '木兰陂', target: '历史沿革', label: '历经' },
+      { source: '木兰陂', target: '工程结构', label: '包含' },
+      { source: '木兰陂', target: '相关人物', label: '涉及' },
+      { source: '木兰陂', target: '历史地位', label: '具备' },
+      { source: '历史沿革', target: '首次筑陂', label: '首次尝试' },
+      { source: '历史沿革', target: '二次筑陂', label: '再次尝试' },
+      { source: '历史沿革', target: '三次筑陂', label: '最终建成' },
+      { source: '工程结构', target: '陂首枢纽', label: '包含' },
+      { source: '工程结构', target: '渠系工程', label: '包含' },
+      { source: '工程结构', target: '堤防工程', label: '包含' },
+      { source: '相关人物', target: '钱四娘', label: '包括' },
+      { source: '相关人物', target: '冯智日', label: '包括' },
+      { source: '相关人物', target: '李宏', label: '包括' },
+      { source: '历史地位', target: '工程价值', label: '体现为' }
+    ];
+
+    function getNodeInfo(name) {
+      var info = '';
+      switch(name) {
+        case '首次筑陂':
+          info = '北宋治平元年（1064年），钱四娘筹钱十万缗筑陂，后被溪洪冲毁。';
+          break;
+        case '二次筑陂':
+          info = '北宋治平年间（1064 - 1067年），林从世在下游建陂，接近完工时被潮水冲垮。';
+          break;
+        case '三次筑陂':
+          info = '北宋熙宁八年（1075年），李宏在冯智日协助下筑陂，元丰六年（1083年）首枢纽工程完工。';
+          break;
+        case '陂首枢纽':
+          info = '由溢流堰、进水闸等组成，拦河坝长219.13米，有不同功能分区。';
+          break;
+        case '渠系工程':
+          info = '分南洋、北洋渠系，总长355千米，灌溉南洋、北洋平原。';
+          break;
+        case '堤防工程':
+          info = '南北堤总长87.48千米，用于防洪、挡潮、排涝。';
+          break;
+        case '钱四娘':
+          info = '北宋福州长乐人，首次尝试筑陂失败殉身，为五代吴越王钱镠之后。';
+          break;
+        case '冯智日':
+          info = '北宋高僧，协助李宏选择陂址并成功筑陂。';
+          break;
+        case '李宏':
+          info = '福建侯官人，应诏募来莆，捐家财续建木兰陂，积劳成疾去世。';
+          break;
+        case '工程价值':
+          info = '是拒咸蓄淡灌溉工程，中国现存完整古代灌溉工程，五大古陂之一。';
+          break;
+        case '木兰陂':
+          info = '位于福建莆田，是重要古代水利工程。';
+          break;
+        case '历史沿革':
+          info = '经历三次主要筑陂事件才最终建成。';
+          break;
+        case '工程结构':
+          info = '包含陂首枢纽、渠系、堤防等工程。';
+          break;
+        case '相关人物':
+          info = '有钱四娘、冯智日、李宏等为筑陂作出贡献。';
+          break;
+        case '历史地位':
+          info = '在工程价值方面具有重要意义。';
+          break;
+      }
+      return info;
+    }
+
+    option = {
+      tooltip: {
+        trigger: 'item',
+        formatter: function(params) {
+          if (params.dataType === 'edge') {
+            return params.data.label;
+          }
+          return params.data.name + '<br/>' + getNodeInfo(params.data.name);
+        }
+      },
+      series: [
+        {
+          type: 'graph',
+          layout: 'force',
+          data: nodes,
+          links: links,
+          categories: [
+            { name: '中心节点' },
+            { name: '一级节点' },
+            { name: '二级节点' }
+          ],
+          roam: true,
+          label: {
+            show: true,
+            position: 'inside'
+          },
+          force: {
+            initLayout: 'circular',
+            repulsion: 2000,
+            edgeLength: [50, 100],
+            gravity: 0.5
+          },
+          lineStyle: {
+            color: 'source',
+            curveness: 0.3
+          },
+          symbolSize: 65,
+          edgeLabel: {
+            show: true,
+            formatter: function (params) {
+              return params.data.label;
+            }
+          }
+        }
+      ]
+    };
+
+    myChart.setOption(option);
+
+    myChart.on('mouseover', function(params) {
+      if (params.dataType === 'node') {
+        var infoPanel = document.getElementById('info-panel');
+        infoPanel.innerHTML = params.data.name + '<br/>' + getNodeInfo(params.data.name);
+        infoPanel.style.display = 'block';
+      }
+    });
+
+    myChart.on('mouseout', function() {
+      var infoPanel = document.getElementById('info-panel');
+      infoPanel.style.display = 'none';
+    });
+  </script>
+</body>
+</html>

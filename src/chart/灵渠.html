@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>灵渠知识图谱</title>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    #chart {
+      width: 80%;
+      height: 600px;
+      margin: 0 auto;
+    }
+    #info-panel {
+      width: 80%;
+      height: 100px;
+      margin: 10px auto;
+      border: 1px solid #ccc;
+      padding: 10px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center;">灵渠知识图谱</h1>
+  <div id="chart"></div>
+  <div id="info-panel"></div>
+  <script>
+    var chartDom = document.getElementById('chart');
+    var myChart = echarts.init(chartDom);
+    var option;
+
+    var nodes = [
+      { name: '灵渠', category: 0 },
+      { name: '干渠概况', category: 1 },
+      { name: '主要支流', category: 1 },
+      { name: '工程构成', category: 1 },
+      { name: '历史演变', category: 1 },
+      { name: '北渠', category: 2 },
+      { name: '南渠', category: 2 },
+      { name: '始安水', category: 2 },
+      { name: '石龙江', category: 2 },
+      { name: '马尿河', category: 2 },
+      { name: '三青岩水', category: 2 },
+      { name: '西岭河', category: 2 },
+      { name: '灵水', category: 2 },
+      { name: '铧嘴', category: 2 },
+      { name: '大小天平', category: 2 },
+      { name: '泄水天平', category: 2 },
+      { name: '水涵', category: 2 },
+      { name: '陡门', category: 2 },
+      { name: '堰坝', category: 2 },
+      { name: '秦堤', category: 2 },
+      { name: '桥梁', category: 2 },
+      { name: '秦代开凿', category: 2 },
+      { name: '唐修陡门', category: 2 },
+      { name: '清重建铧嘴', category: 2 },
+      { name: '现代修复', category: 2 }
+    ];
+
+    var links = [
+      { source: '灵渠', target: '干渠概况', label: '包含' },
+      { source: '灵渠', target: '主要支流', label: '包含' },
+      { source: '灵渠', target: '工程构成', label: '包含' },
+      { source: '灵渠', target: '历史演变', label: '经历' },
+      { source: '干渠概况', target: '北渠', label: '包括' },
+      { source: '干渠概况', target: '南渠', label: '包括' },
+      { source: '主要支流', target: '始安水', label: '包含' },
+      { source: '主要支流', target: '石龙江', label: '包含' },
+      { source: '主要支流', target: '马尿河', label: '包含' },
+      { source: '主要支流', target: '三青岩水', label: '包含' },
+      { source: '主要支流', target: '西岭河', label: '包含' },
+      { source: '主要支流', target: '灵水', label: '包含' },
+      { source: '工程构成', target: '铧嘴', label: '包含' },
+      { source: '工程构成', target: '大小天平', label: '包含' },
+      { source: '工程构成', target: '泄水天平', label: '包含' },
+      { source: '工程构成', target: '水涵', label: '包含' },
+      { source: '工程构成', target: '陡门', label: '包含' },
+      { source: '工程构成', target: '堰坝', label: '包含' },
+      { source: '工程构成', target: '秦堤', label: '包含' },
+      { source: '工程构成', target: '桥梁', label: '包含' },
+      { source: '历史演变', target: '秦代开凿', label: '始建于' },
+      { source: '历史演变', target: '唐修陡门', label: '首次现陡门' },
+      { source: '历史演变', target: '清重建铧嘴', label: '重建铧嘴于' },
+      { source: '历史演变', target: '现代修复', label: '现代修复了' }
+    ];
+
+    function getNodeInfo(name) {
+      var info = '';
+      switch(name) {
+        case '北渠':
+          info = '人工开凿，与湘江故道平行，长3.25公里。';
+          break;
+        case '南渠':
+          info = '长约33.15公里，引湘水3分，部分人工航道。';
+          break;
+        case '始安水':
+          info = '源于越城峤山谷，汇入灵渠。';
+          break;
+        case '石龙江':
+          info = '源出台板石，曲折入灵渠。';
+          break;
+        case '马尿河':
+          info = '源自唐公背山，北流后入渠。';
+          break;
+        case '三青岩水':
+          info = '源于三青岩，流程较长入渠。';
+          break;
+        case '西岭河':
+          info = '灵渠自然支流。';
+          break;
+        case '灵水':
+          info = '灵渠自然支流。';
+          break;
+        case '铧嘴':
+          info = '分水设施，在拦河坝上游。';
+          break;
+        case '大小天平':
+          info = '拦截海洋河，呈人字形。';
+          break;
+        case '泄水天平':
+          info = '用于调节灵渠水量。';
+          break;
+        case '水涵':
+          info = '堤内块石砌筑，用于灌溉。';
+          break;
+        case '陡门':
+          info = '壅高水位，蓄水通航。';
+          break;
+        case '堰坝':
+          info = '栏河蓄水，有两种类型。';
+          break;
+        case '秦堤':
+          info = '用于防洪护渠。';
+          break;
+        case '桥梁':
+          info = '灵渠附属交通设施。';
+          break;
+        case '秦代开凿':
+          info = '灵渠始建于秦代。';
+          break;
+        case '唐修陡门':
+          info = '唐宝历元年首次出现陡门。';
+          break;
+        case '清重建铧嘴':
+          info = '清光绪十一年重建铧嘴。';
+          break;
+        case '现代修复':
+          info = '修复铧嘴石堤约30米。';
+          break;
+        case '灵渠':
+          info = '沟通湘漓，古代水利工程。';
+          break;
+        case '干渠概况':
+          info = '包含南北渠相关情况。';
+          break;
+        case '主要支流':
+          info = '有自然及其他多种支流。';
+          break;
+        case '工程构成':
+          info = '由多种设施共同构成。';
+          break;
+        case '历史演变':
+          info = '历经多次修建与变革。';
+          break;
+      }
+      return info;
+    }
+
+    option = {
+      tooltip: {
+        trigger: 'item',
+        formatter: function(params) {
+          if (params.dataType === 'edge') {
+            return params.data.label;
+          }
+          return params.data.name + '<br/>' + getNodeInfo(params.data.name);
+        }
+      },
+      series: [
+        {
+          type: 'graph',
+          layout: 'force',
+          data: nodes,
+          links: links,
+          categories: [
+            { name: '中心节点' },
+            { name: '一级节点' },
+            { name: '二级节点' }
+          ],
+          roam: true,
+          label: {
+            show: true,
+            position: 'inside'
+          },
+          force: {
+            initLayout: 'circular',
+            repulsion: 2000,
+            edgeLength: [50, 100],
+            gravity: 0.5
+          },
+          lineStyle: {
+            color: 'source',
+            curveness: 0.3
+          },
+          symbolSize: 65,
+          edgeLabel: {
+            show: true,
+            formatter: function (params) {
+              return params.data.label;
+            }
+          }
+        }
+      ]
+    };
+
+    myChart.setOption(option);
+
+    myChart.on('mouseover', function(params) {
+      if (params.dataType === 'node') {
+        var infoPanel = document.getElementById('info-panel');
+        infoPanel.innerHTML = params.data.name + '<br/>' + getNodeInfo(params.data.name);
+        infoPanel.style.display = 'block';
+      }
+    });
+
+    myChart.on('mouseout', function() {
+      var infoPanel = document.getElementById('info-panel');
+      infoPanel.style.display = 'none';
+    });
+  </script>
+</body>
+</html>

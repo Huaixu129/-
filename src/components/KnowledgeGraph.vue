@@ -32,20 +32,6 @@ const initChart = async () => {
     // 确保图表适应容器大小并居中
     if (chart) {
       chart.resize();
-      // 设置图表居中显示
-      chart.getZr().on('rendered', () => {
-        setTimeout(() => {
-          const option = chart.getOption();
-          if (option.series && option.series[0]) {
-            // 设置视图中心为图表中心
-            chart.setOption({
-              series: [{
-                center: ['50%', '50%']
-              }]
-            }, {notMerge: false});
-          }
-        }, 100);
-      });
     }
   }
 };

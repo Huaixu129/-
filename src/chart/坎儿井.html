@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>坎儿井知识图谱</title>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    #chart {
+      width: 80%;
+      height: 600px;
+      margin: 0 auto;
+    }
+    #info-panel {
+      width: 80%;
+      height: 100px;
+      margin: 10px auto;
+      border: 1px solid #ccc;
+      padding: 10px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center;">坎儿井知识图谱</h1>
+  <div id="chart"></div>
+  <div id="info-panel"></div>
+  <script>
+    var chartDom = document.getElementById('chart');
+    var myChart = echarts.init(chartDom);
+    var option;
+
+    var nodes = [
+      { name: '坎儿井', category: 0 },
+      { name: '起源建造', category: 1 },
+      { name: '工程构成', category: 1 },
+      { name: '历史意义', category: 1 },
+      { name: '现状情况', category: 1 },
+      { name: '西汉始创', category: 2 },
+      { name: '维族建造', category: 2 },
+      { name: '吐鲁番地', category: 2 },
+      { name: '干旱取水', category: 2 },
+      { name: '竖井', category: 2 },
+      { name: '地下渠', category: 2 },
+      { name: '地面渠', category: 2 },
+      { name: '涝坝', category: 2 },
+      { name: '农业保障', category: 2 },
+      { name: '文化象征', category: 2 },
+      { name: '部分存续', category: 2 },
+      { name: '保护开发', category: 2 },
+      { name: '水利互补', category: 2 }
+    ];
+
+    var links = [
+      { source: '坎儿井', target: '起源建造', label: '具备' },
+      { source: '坎儿井', target: '工程构成', label: '包含' },
+      { source: '坎儿井', target: '历史意义', label: '具有' },
+      { source: '坎儿井', target: '现状情况', label: '呈现' },
+      { source: '起源建造', target: '西汉始创', label: '起源于' },
+      { source: '起源建造', target: '维族建造', label: '建造者是' },
+      { source: '起源建造', target: '吐鲁番地', label: '选址于' },
+      { source: '起源建造', target: '干旱取水', label: '建造因' },
+      { source: '工程构成', target: '竖井', label: '包含' },
+      { source: '工程构成', target: '地下渠', label: '包含' },
+      { source: '工程构成', target: '地面渠', label: '包含' },
+      { source: '工程构成', target: '涝坝', label: '包含' },
+      { source: '历史意义', target: '农业保障', label: '作用于' },
+      { source: '历史意义', target: '文化象征', label: '体现为' },
+      { source: '现状情况', target: '部分存续', label: '存在态' },
+      { source: '现状情况', target: '保护开发', label: '措施为' },
+      { source: '现状情况', target: '水利互补', label: '发展为' }
+    ];
+
+    function getNodeInfo(name) {
+      var info = '';
+      switch(name) {
+        case '西汉始创':
+          info = '坎儿井始创于西汉，现存多为清代后修建。';
+          break;
+        case '维族建造':
+          info = '由新疆吐鲁番地区劳动人民建造。';
+          break;
+        case '吐鲁番地':
+          info = '普遍分布于新疆吐鲁番地区，利用特殊地形。';
+          break;
+        case '干旱取水':
+          info = '吐鲁番气候干旱，为利用地下水而建。';
+          break;
+        case '竖井':
+          info = '垂直深井，用于出土、通风和观测水位。';
+          break;
+        case '地下渠':
+          info = '输送地下水，减少蒸发渗漏。';
+          break;
+        case '地面渠':
+          info = '根据农田布局，分配地下水灌溉。';
+          break;
+        case '涝坝':
+          info = '储水调节流量，稳定灌溉用水。';
+          break;
+        case '农业保障':
+          info = '为吐鲁番农业提供稳定水源，保障生产。';
+          break;
+        case '文化象征':
+          info = '与长城、运河并称古代三大工程，体现智慧。';
+          break;
+        case '部分存续':
+          info = '部分坎儿井干涸废弃，部分仍发挥作用。';
+          break;
+        case '保护开发':
+          info = '政府保护，部分成为景点，促进文旅。';
+          break;
+        case '水利互补':
+          info = '与现代水利互补，保障资源利用和发展。';
+          break;
+        case '坎儿井':
+          info = '位于新疆吐鲁番，是独特水利工程。';
+          break;
+        case '起源建造':
+          info = '涉及坎儿井的起源时间、建造者等。';
+          break;
+        case '工程构成':
+          info = '包含竖井、渠道、涝坝等构成部分。';
+          break;
+        case '历史意义':
+          info = '对农业和文化有着重要意义。';
+          break;
+        case '现状情况':
+          info = '涵盖存续、保护和发展现状。';
+          break;
+      }
+      return info;
+    }
+
+    option = {
+      tooltip: {
+        trigger: 'item',
+        formatter: function(params) {
+          if (params.dataType === 'edge') {
+            return params.data.label;
+          }
+          return params.data.name + '<br/>' + getNodeInfo(params.data.name);
+        }
+      },
+      series: [
+        {
+          type: 'graph',
+          layout: 'force',
+          data: nodes,
+          links: links,
+          categories: [
+            { name: '中心节点' },
+            { name: '一级节点' },
+            { name: '二级节点' }
+          ],
+          roam: true,
+          label: {
+            show: true,
+            position: 'inside'
+          },
+          force: {
+            initLayout: 'circular',
+            repulsion: 2000,
+            edgeLength: [50, 100],
+            gravity: 0.5
+          },
+          lineStyle: {
+            color: 'source',
+            curveness: 0.3
+          },
+          symbolSize: 65,
+          edgeLabel: {
+            show: true,
+            formatter: function (params) {
+              return params.data.label;
+            }
+          }
+        }
+      ]
+    };
+
+    myChart.setOption(option);
+
+    myChart.on('mouseover', function(params) {
+      if (params.dataType === 'node') {
+        var infoPanel = document.getElementById('info-panel');
+        infoPanel.innerHTML = params.data.name + '<br/>' + getNodeInfo(params.data.name);
+        infoPanel.style.display = 'block';
+      }
+    });
+
+    myChart.on('mouseout', function() {
+      var infoPanel = document.getElementById('info-panel');
+      infoPanel.style.display = 'none';
+    });
+  </script>
+</body>
+</html>
