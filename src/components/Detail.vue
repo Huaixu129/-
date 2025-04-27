@@ -16,7 +16,9 @@
     <div class="content-area flex flex-col justify-between h-[90%]">
       <!-- 上三格 -->
       <div class="flex justify-between h-[48%]">
-        <div class="box w-[32%] left-top-box"></div>
+        <div class="box w-[32%] left-top-box">
+          <img :src="getProjectImage" class="project-image" />
+        </div>
         <div class="box w-[32%] chart-box">
           <KnowledgeGraph :projectName="province" />
         </div>
@@ -34,7 +36,7 @@
 
 <script setup>
 import { useRouter } from "vue-router";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import KnowledgeGraph from "./KnowledgeGraph.vue";
 
 const props = defineProps({
@@ -49,6 +51,19 @@ const router = useRouter();
 const goBack = () => {
   router.push("/");
 }; // 调试用
+
+const getProjectImage = computed(() => {
+  const imageMap = {
+    '隋唐大运河': '隋唐大运河.png',
+    '灵渠': '灵渠.png',
+    '郑国渠': '郑国渠.png',
+    '都江堰': '都江堰.png',
+    '它山堰': '它山堰.png',
+    '木兰陂': '木兰陂.png',
+    '坎儿井': '坎儿井.png'
+  };
+  return `/src/data/detail/WPhoto2/${imageMap[props.province]}`;
+});
 </script>
 
 <style>
@@ -120,6 +135,7 @@ const goBack = () => {
   background-repeat: no-repeat;
   padding: 0;
   border: none;
+  position: relative;
 }
 
 .right-top-box {
@@ -165,5 +181,15 @@ const goBack = () => {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.project-image {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.75);
+  max-width: 80%;
+  max-height: 80%;
+  object-fit: contain;
 }
 </style>
