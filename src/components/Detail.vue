@@ -28,7 +28,39 @@
       <!-- 下两格 -->
       <div class="flex justify-between h-[48%]">
         <div class="box w-[48%] left-bottom-box"></div>
-        <div class="box w-[48%] right-bottom-box"></div>
+        <div class="box w-[48%] right-bottom-box">
+          <div class="person-info-container">
+            <div class="person-info-content">
+              <h2 class="person-name">{{ personInfo.人物 }}</h2>
+              <div class="person-brief">{{ personInfo.简介 }}</div>
+              <div class="person-details">
+                <template v-if="personInfo.主要成就">
+                  <div class="section-title">主要成就</div>
+                  <ul class="achievement-list" v-if="Array.isArray(personInfo.主要成就)">
+                    <li v-for="(item, index) in personInfo.主要成就" :key="index">
+                      {{ item }}
+                    </li>
+                  </ul>
+                  <div v-else class="achievement-single">
+                    {{ personInfo.主要成就 }}
+                  </div>
+                </template>
+                <template v-if="personInfo.水利贡献">
+                  <div class="section-title">水利贡献</div>
+                  <div class="contribution-content">{{ personInfo.水利贡献 }}</div>
+                </template>
+                <template v-if="personInfo.背景">
+                  <div class="section-title">历史背景</div>
+                  <div class="background-content">{{ personInfo.背景 }}</div>
+                </template>
+                <template v-if="personInfo.纪念">
+                  <div class="section-title">后世纪念</div>
+                  <div class="memorial-content">{{ personInfo.纪念 }}</div>
+                </template>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -38,6 +70,7 @@
 import { useRouter } from "vue-router";
 import { ref, onMounted, computed } from "vue";
 import KnowledgeGraph from "./KnowledgeGraph.vue";
+import personInfoData from "../data/detail/PersonInfo/PersonInfo.json";
 
 const props = defineProps({
   province: {
@@ -63,6 +96,10 @@ const getProjectImage = computed(() => {
     '坎儿井': '坎儿井.png'
   };
   return `/src/data/detail/WPhoto2/${imageMap[props.province]}`;
+});
+
+const personInfo = computed(() => {
+  return personInfoData[props.province] || {};
 });
 </script>
 
@@ -163,6 +200,7 @@ const getProjectImage = computed(() => {
   background-repeat: no-repeat;
   padding: 0;
   border: none;
+  position: relative;
 }
 
 .detail-title {
@@ -191,5 +229,101 @@ const getProjectImage = computed(() => {
   max-width: 80%;
   max-height: 80%;
   object-fit: contain;
+  outline: none;
+  border: none;
+}
+
+.person-info-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.person-info-content {
+  width: 100%;
+  max-width: 70%;
+  height: 100%;
+  max-height: 70%;
+  overflow-y: auto;
+  padding: 10px 0 40px 0;
+  color: #0f0e0e;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+  margin: 0 auto;
+}
+.person-info-content::-webkit-scrollbar {
+  display: none; /* Chrome/Safari/Webkit */
+}
+
+.person-name {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.person-brief {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.person-details {
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.section-title {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin: 1rem 0 0.5rem;
+  color: #ffd700;
+}
+
+.achievement-list {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.achievement-list li {
+  margin-bottom: 0.8rem;
+  position: relative;
+  padding-left: 1.2rem;
+  width: 100%;
+  display: block;
+  white-space: normal;
+  word-break: break-all;
+}
+
+.achievement-list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #ffd700;
+}
+
+.contribution-content,
+.background-content,
+.memorial-content {
+  margin-bottom: 1rem;
+}
+
+.achievement-single {
+  margin-bottom: 0.8rem;
+  padding-left: 1.2rem;
+  color: #fff;
+  font-size: 1.1rem;
+  line-height: 1.6;
 }
 </style>
