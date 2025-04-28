@@ -159,7 +159,7 @@ const personInfo = computed(() => {
 
 .box {
   height: 100%;
-  border: 1px solid rgba(255, 255, 255, 0);
+  border: 1px solid rgba(5, 5, 5, 0);
   background-color: transparent;
   border-radius: 8px;
   padding: 10px;
@@ -247,7 +247,7 @@ const personInfo = computed(() => {
 
 .person-info-content {
   width: 100%;
-  max-width: 70%;
+  max-width: 75%;
   height: 100%;
   max-height: 70%;
   overflow-y: auto;
@@ -258,34 +258,35 @@ const personInfo = computed(() => {
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE 10+ */
   margin: 0 auto;
+  font-size: 1.3rem;
 }
 .person-info-content::-webkit-scrollbar {
   display: none; /* Chrome/Safari/Webkit */
 }
 
 .person-name {
-  font-size: 2rem;
+  font-size: 2.2rem;
   text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: 0.3rem;
   font-weight: bold;
 }
 
 .person-brief {
-  font-size: 1.2rem;
-  line-height: 1.6;
-  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
   text-align: center;
 }
 
 .person-details {
-  font-size: 1.1rem;
-  line-height: 1.6;
+  font-size: 1.3rem;
+  line-height: 1.2;
 }
 
 .section-title {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   font-weight: bold;
-  margin: 1rem 0 0.5rem;
+  margin: 0.3rem 0 0.3rem 0;
   color: #ffd700;
 }
 
@@ -297,13 +298,15 @@ const personInfo = computed(() => {
 }
 
 .achievement-list li {
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.3rem;
   position: relative;
   padding-left: 1.2rem;
   width: 100%;
   display: block;
   white-space: normal;
   word-break: break-all;
+  font-size: 1.2rem;
+  line-height: 1.2;
 }
 
 .achievement-list li::before {
@@ -320,10 +323,10 @@ const personInfo = computed(() => {
 }
 
 .achievement-single {
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.3rem;
   padding-left: 1.2rem;
   color: #fff;
-  font-size: 1.1rem;
-  line-height: 1.6;
+  font-size: 1.2rem;
+  line-height: 1.2;
 }
 </style>
