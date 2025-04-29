@@ -212,7 +212,7 @@ const engineerInfo = computed(() => {
 }
 
 .left-bottom-box {
-  background-color: rgba(244, 226, 180, 0.5);
+  background-color: rgba(244, 226, 180, 50%);
   background-image: url("../assets/img/leftBottom.png");
   background-size: contain;
   background-position: center;
@@ -220,6 +220,7 @@ const engineerInfo = computed(() => {
   padding: 0;
   border: none;
   position: relative;
+  z-index: 1;
 }
 
 .right-bottom-box {
@@ -399,8 +400,6 @@ const engineerInfo = computed(() => {
 }
 
 .engineer-text {
-  background-color: rgba(244, 226, 180, 0);
-  background-image: linear-gradient(to bottom, transparent 97%, #666 97%);
   background-size: 100% 1.8rem;
   color: #0f0e0e;
   font-size: 1.1rem;
