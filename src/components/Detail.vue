@@ -22,12 +22,20 @@
         <div class="box w-[32%] chart-box">
           <KnowledgeGraph :projectName="province" />
         </div>
-        <div class="box w-[32%] right-top-box"></div>
+        <div class="box w-[32%] right-top-box">
+          <img :src="getPersonImage" class="person-image" />
+        </div>
       </div>
 
       <!-- 下两格 -->
       <div class="flex justify-between h-[48%]">
-        <div class="box w-[48%] left-bottom-box"></div>
+        <div class="box w-[48%] left-bottom-box ">
+          <div class="engineer-info-container">
+            <div class="engineer-info-content">
+              <div class="engineer-text">{{ engineerInfo }}</div>
+            </div>
+          </div>
+        </div>
         <div class="box w-[48%] right-bottom-box">
           <div class="person-info-container">
             <div class="person-info-content">
@@ -71,6 +79,7 @@ import { useRouter } from "vue-router";
 import { ref, onMounted, computed } from "vue";
 import KnowledgeGraph from "./KnowledgeGraph.vue";
 import personInfoData from "../data/detail/PersonInfo/PersonInfo.json";
+import engineerInfoData from "../data/detail/EngeneerInfo/EngeneerInfo.json";
 
 const props = defineProps({
   province: {
@@ -98,8 +107,25 @@ const getProjectImage = computed(() => {
   return `/src/data/detail/WPhoto2/${imageMap[props.province]}`;
 });
 
+const getPersonImage = computed(() => {
+  const imageMap = {
+    '隋唐大运河': '隋朝大运河.png',
+    '灵渠': '灵渠.png',
+    '郑国渠': '郑国渠.png',
+    '都江堰': '都江堰.png',
+    '它山堰': '它山堰.png',
+    '木兰陂': '木兰陂.png',
+    '坎儿井': '坎儿井.png'
+  };
+  return `/src/data/detail/PersonPhoto/${imageMap[props.province]}`;
+});
+
 const personInfo = computed(() => {
   return personInfoData[props.province] || {};
+});
+
+const engineerInfo = computed(() => {
+  return engineerInfoData[props.province] || "";
 });
 </script>
 
@@ -182,15 +208,18 @@ const personInfo = computed(() => {
   background-repeat: no-repeat;
   padding: 0;
   border: none;
+  position: relative; /* ← 加上这句！ */
 }
 
 .left-bottom-box {
+  background-color: rgba(244, 226, 180, 0.5);
   background-image: url("../assets/img/leftBottom.png");
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
   padding: 0;
   border: none;
+  position: relative;
 }
 
 .right-bottom-box {
@@ -225,7 +254,7 @@ const personInfo = computed(() => {
   position: absolute;
   top: 40%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(0.75);
+  transform: translate(-50%, -42%) scale(0.95);
   max-width: 80%;
   max-height: 80%;
   object-fit: contain;
@@ -325,8 +354,61 @@ const personInfo = computed(() => {
 .achievement-single {
   margin-bottom: 0.3rem;
   padding-left: 1.2rem;
-  color: #fff;
+  color: #080707;
   font-size: 1.2rem;
   line-height: 1.2;
+}
+
+.person-image {
+  position: absolute;
+  top: 8%;
+  left: 17%;
+  width: 67%;
+  aspect-ratio: 1 / 1; /* 保持宽高比 1:1 */
+  object-fit: cover;
+  border-radius: 50%;
+  outline: none;
+  border: none;
+  z-index: 1;
+}
+
+.engineer-info-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.engineer-info-content {
+  width: 95%;
+  height: 70%;
+  overflow-y: auto;
+  margin: 0 auto;
+  padding: 0 5% 0 5%;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+.engineer-info-content::-webkit-scrollbar {
+  display: none; /* Chrome/Safari/Webkit */
+}
+
+.engineer-text {
+  background-color: rgba(244, 226, 180, 0);
+  background-image: linear-gradient(to bottom, transparent 97%, #666 97%);
+  background-size: 100% 1.8rem;
+  color: #0f0e0e;
+  font-size: 1.1rem;
+  line-height: 1.8rem; /* 修改 line-height 与背景线高度一致 */
+  text-align: justify;
+  white-space: pre-wrap;
+  background-image: linear-gradient(to bottom, transparent 97%, #666 97%);
+  background-size: 100% 1.8rem; /* 保持与 line-height 一致 */
+  padding: 0 0 0.2rem 0;
 }
 </style>
