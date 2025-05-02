@@ -265,8 +265,6 @@ const engineerInfo = computed(() => {
 
 .person-info-container {
   position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   display: flex;
@@ -297,7 +295,6 @@ const engineerInfo = computed(() => {
 .person-name {
   font-size: 2.2rem;
   text-align: center;
-  margin-bottom: 0.3rem;
   font-weight: bold;
 }
 
@@ -402,7 +399,7 @@ const engineerInfo = computed(() => {
 .engineer-text {
   background-size: 100% 1.8rem;
   color: #0f0e0e;
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   line-height: 1.8rem; /* 修改 line-height 与背景线高度一致 */
   text-align: justify;
   white-space: pre-wrap;

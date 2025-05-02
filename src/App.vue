@@ -2,21 +2,22 @@
   <router-view />
   <div class="bg-[url('assets/img/image.png')] dashboard-container">
     <div class="dashboard-item title">
-      <T
-        class="bg-yellow-400/3 box-border p-1 mt-0 mb-3 shrink-0"
-      />
+      <T class="bg-yellow-400/3 box-border p-1 mt-0 mb-3 shrink-0" />
     </div>
     <div class="dashboard-item chart-left-top">
-      <graph1/>
+      <graph1 />
     </div>
     <div class="dashboard-item images">
       <graph2 class="h-1/2 box-border pb-4" />
     </div>
     <div class="dashboard-item map">
-      <mapChart class="bg-yellow-400/1 grow" /> 
+      <mapChart class="bg-yellow-400/1 grow" />
     </div>
     <div class="dashboard-item timeline">
-      <timeAxis class="bg-yellow-400/1 p-3 grow" @dynasty-change="onDynastyChange" />
+      <timeAxis
+        class="bg-yellow-400/1 p-3 grow"
+        @dynasty-change="onDynastyChange"
+      />
     </div>
     <div class="dashboard-item chart-right-top">
       <graph4 class="h-1/3 box-border pb-4" />
@@ -43,10 +44,10 @@ import graph6 from "./components/graph6.vue";
 import mapChart from "./components/mapChart.vue";
 import T from "./components/T.vue";
 import timeAxis from "./components/timeAxis.vue";
-import { ref, provide } from 'vue';
+import { ref, provide } from "vue";
 
 // 当前朝代状态
-const currentDynasty = ref('春秋');
+const currentDynasty = ref("春秋");
 
 // 当前悬浮的水利工程
 const hoveredProject = ref(null);
@@ -62,9 +63,9 @@ const onProjectHover = (projectName) => {
 };
 
 // 提供当前朝代给其他组件
-provide('currentDynasty', currentDynasty);
+provide("currentDynasty", currentDynasty);
 // 提供当前悬浮项目给其他组件
-provide('hoveredProject', hoveredProject);
+provide("hoveredProject", hoveredProject);
 </script>
 
 <style>
@@ -112,14 +113,11 @@ body {
 .chart-left-top {
   grid-column: 1 / 2;
   grid-row: 1 / 8;
-    border: 2px solid #d86a5a;
-
 }
 
 .images {
   grid-column: 1 / 2;
-  grid-row: 8 / 15;
-
+  grid-row: 7 / 15;
 }
 
 .map {
@@ -162,7 +160,7 @@ body {
   /* 新增以下属性确保布局稳定 */
   position: relative;
   overflow: hidden;
-  min-width: 0;  /* 防止内容溢出 */
+  min-width: 0; /* 防止内容溢出 */
   min-height: 0; /* 防止内容溢出 */
 }
 

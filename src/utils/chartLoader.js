@@ -799,8 +799,7 @@ export const chartMap = {
   '坎儿井': loadKanerjingChart,
   '灵渠': loadLingquChart,
   '木兰陂': loadMulanpiChart,
-  '它山堰': loadTuoshanyanChart,
-  // 可以添加更多的水利工程图表
+  '它山堰': loadTuoshanyanChart
 };
 
 // 主函数：根据项目名称加载对应图表

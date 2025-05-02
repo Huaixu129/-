@@ -1,26 +1,83 @@
-<template lang="">
-    <div>
-        不同功能的水利工程占比饼状图
-    </div>
+<template>
+  <div ref="chartRef" style="width: 100%; height: 100%"></div>
 </template>
-<script setup>
-// const props = defineProps({
-//   data: Object,
-//   loading: Boolean,
-//   error: String,
-// });
 
-// watch(
-//   () => props.data,
-//   (newData) => {
-//     if (newData) {
-//       // 使用graph2的专属数据渲染图表
-//       console.log("Graph4数据:", newData);
-//     }
-//   },
-//   { immediate: true }
-// );
+<script setup>
+import { onMounted, ref, onBeforeUnmount } from "vue";
+import * as echarts from "echarts";
+
+const chartRef = ref(null);
+let myChart = null;
+
+onMounted(() => {
+  if (chartRef.value) {
+    myChart = echarts.init(chartRef.value);
+    const option = {
+      color: ["#A0C0C0", "#A07040", "#F0D080", "#608060", "#5F7A76"],
+      title: {
+        text: "中国水利工程分类统计",
+        subtext: "数据来源：《中国科学技术史 水利卷》",
+        left: "center",
+        top: 10,
+        padding: [1, 0, 3, 0], // 上右下左
+        textStyle: {
+          fontSize: 14,
+        },
+        subtextStyle: {
+          fontSize: 10,
+        },
+      },
+      legend: {
+        orient: "vertical",
+        left: "left",
+        top: "bottom",
+        itemWidth: 10,
+        itemHeight: 10,
+        textStyle: {
+          fontSize: 10,
+        },
+      },
+      series: [
+        {
+          name: "水利工程类型",
+          type: "pie",
+          radius: ["45%", "75%"], // 略微放大
+          center: ["60%", "55%"], // 向右偏移以给图例留空间
+          avoidLabelOverlap: false,
+          label: {
+            show: true,
+            formatter: function (params) {
+              return `${params.name}：${params.value}%\n(${params.data.d}%~${params.data.e}%)`;
+            },
+            position: "outside",
+            overflow: "truncate",
+            ellipsis: "...",
+          },
+          labelLine: {
+            show: true,
+          },
+          data: [
+            { name: "灌溉工程", value: 65, d: 60, e: 70 },
+            { name: "防洪/堤防", value: 17.5, d: 15, e: 20 },
+            { name: "漕运和运河工程", value: 12.5, d: 10, e: 15 },
+            { name: "城市供排水工程", value: 7.5, d: 5, e: 10 },
+            { name: "其他（水力机械、盐运工程等）", value: 2.5, d: 0, e: 5 },
+          ],
+        },
+      ],
+    };
+
+    myChart.setOption(option);
+    window.addEventListener("resize", myChart.resize);
+  }
+});
+
+onBeforeUnmount(() => {
+  if (myChart) {
+    window.removeEventListener("resize", myChart.resize);
+    myChart.dispose();
+  }
+});
 </script>
-<style lang="">
-    
-</style>
+
+<style scoped></style>

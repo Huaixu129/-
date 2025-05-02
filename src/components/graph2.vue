@@ -40,40 +40,40 @@ const handleImageError = () => {
 </script>
 <style>
 .image-container {
-  width: 100%;
-  height: 100%;
+  width: 600px;
+  height: 600px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
   overflow: hidden;
-  padding: 20px;
+  padding: 0;
   position: relative;
 }
 
 .project-title {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+  width: 100%;
+  height: 40px; /* 固定标题高度 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
   font-size: 24px;
   font-weight: bold;
   color: #333;
   background-color: transparent;
-  padding: 5px 10px;
-  z-index: 1;
+  z-index: 2; /* 确保标题在图片上方 */
   font-family: "点书小隶体", sans-serif;
+  margin-bottom: 5px;
+  position: relative; /* 确保标题在正常文档流中 */
 }
 
 .project-image {
-  max-width: 90%;
-  max-height: 90%;
-  object-fit: contain;
-  border: 2px dashed #999;
-  border-radius: 0;
   width: 100%;
-  height: 100%;
-  object-fit: contain;
-  margin-top: 30px; /* 为标题留出空间 */
+  height: calc(100% - 45px); /* 减去标题高度和间距 */
+  object-fit: cover;
+  object-position: center;
+  position: relative;
+  z-index: 1; /* 确保图片在标题下方 */
 }
 </style>
