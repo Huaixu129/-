@@ -27,6 +27,43 @@ onMounted(() => {
           fontSize: 10,
         },
       },
+      tooltip: {
+        trigger: 'item',
+        formatter: function (params) {
+          return `${params.name}：${params.value}%<br/>范围：${params.data.d}% ~ ${params.data.e}%`;
+        },
+        position: function (point, params, dom, rect, size) {
+          // 获取容器的宽度和高度
+          const containerWidth = size.viewSize[0];
+          const containerHeight = size.viewSize[1];
+
+          // 计算 tooltip 的默认位置
+          let x = point[0] - dom.offsetWidth - 10;
+          let y = point[1] - dom.offsetHeight / 2;
+
+          // 确保 tooltip 不会超出容器的左边界
+          if (x < 0) {
+            x = point[0] + 10;
+          }
+
+          // 确保 tooltip 不会超出容器的右边界
+          if (x + dom.offsetWidth > containerWidth) {
+            x = containerWidth - dom.offsetWidth - 10;
+          }
+
+          // 确保 tooltip 不会超出容器的上边界
+          if (y < 0) {
+            y = 10;
+          }
+
+          // 确保 tooltip 不会超出容器的下边界
+          if (y + dom.offsetHeight > containerHeight) {
+            y = containerHeight - dom.offsetHeight - 10;
+          }
+
+          return [x, y];
+        }
+      },
       legend: {
         orient: "vertical",
         left: "left",
@@ -45,16 +82,10 @@ onMounted(() => {
           center: ["60%", "55%"], // 向右偏移以给图例留空间
           avoidLabelOverlap: false,
           label: {
-            show: true,
-            formatter: function (params) {
-              return `${params.name}：${params.value}%\n(${params.data.d}%~${params.data.e}%)`;
-            },
-            position: "outside",
-            overflow: "truncate",
-            ellipsis: "...",
+            show: false,
           },
           labelLine: {
-            show: true,
+            show: false,
           },
           data: [
             { name: "灌溉工程", value: 65, d: 60, e: 70 },
@@ -80,4 +111,6 @@ onBeforeUnmount(() => {
 });
 </script>
 
-<style scoped></style>
+<style>
+
+</style>

@@ -132,7 +132,7 @@ body {
 
 .chart-right-top {
   grid-column: 3 / 4;
-  grid-row: 1 / 7;
+  grid-row: 1 / 8;
 }
 
 .chart-right-middle {
@@ -151,7 +151,6 @@ body {
 }
 
 .dashboard-item {
-  /* border: 2px solid #d86a5a; */
   display: flex;
   justify-content: center;
   align-items: center;
