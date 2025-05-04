@@ -22,9 +22,11 @@ onMounted(() => {
         padding: [1, 0, 3, 0], // 上右下左
         textStyle: {
           fontSize: 14,
+          fontFamily: "点书小隶体, sans-serif",
         },
         subtextStyle: {
           fontSize: 10,
+          fontFamily: "点书小隶体, sans-serif",
         },
       },
       tooltip: {
@@ -62,6 +64,9 @@ onMounted(() => {
           }
 
           return [x, y];
+        },
+        textStyle: {
+          fontFamily: "点书小隶体, sans-serif",
         }
       },
       legend: {
@@ -72,6 +77,7 @@ onMounted(() => {
         itemHeight: 10,
         textStyle: {
           fontSize: 10,
+          fontFamily: "点书小隶体, sans-serif",
         },
       },
       series: [
@@ -112,5 +118,7 @@ onBeforeUnmount(() => {
 </script>
 
 <style>
-
+.chart-container {
+  font-family: "点书小隶体", sans-serif;
+}
 </style>

@@ -143,7 +143,6 @@ body {
 .chart-right-bottom {
   grid-column: 3 / 4;
   grid-row: 13 / 21;
-  border: 2px solid #d86a5a;
 }
 
 .chart-bottom {

@@ -27,7 +27,8 @@ onMounted(() => {
         top: '5%',
         textStyle: {
           fontSize: 14,
-          color: '#333'
+          color: '#333',
+          fontFamily: "点书小隶体, sans-serif"
         }
       },
       tooltip: {
@@ -42,6 +43,9 @@ onMounted(() => {
           // 格式化为"万"单位，保留1位小数
           var formattedValue = (value / 10000).toFixed(1);
           return name + ': ' + formattedValue + ' 万';
+        },
+        textStyle: {
+          fontFamily: "点书小隶体, sans-serif"
         }
       },
       grid: {
@@ -55,7 +59,8 @@ onMounted(() => {
         type: 'category',
         data: ['湖南', '广东', '江西', '四川', '湖北', '安徽', '云南', '广西', '河南', '浙江'],
         axisLabel: {
-          fontSize: 12
+          fontSize: 12,
+          fontFamily: "点书小隶体, sans-serif"
         }
       },
       xAxis: {
@@ -65,13 +70,15 @@ onMounted(() => {
         nameGap: 15,
         nameTextStyle: {
           padding: [5, 0, 0, 0],
-          align: 'right'
+          align: 'right',
+          fontFamily: "点书小隶体, sans-serif"
         },
         axisLabel: {
           fontSize: 12,
           formatter: function(value) {
             return (value / 10000).toFixed(0);
-          }
+          },
+          fontFamily: "点书小隶体, sans-serif"
         },
         splitLine: {
           show: true
@@ -93,7 +100,8 @@ onMounted(() => {
           formatter: function(params) {
             // 格式化为"万"单位，保留1位小数
             return (params.value / 10000).toFixed(1) + '万';
-          }
+          },
+          fontFamily: "点书小隶体, sans-serif"
         },
         barWidth: '60%',  // 增加柱子宽度，使图表显得更大
         barCategoryGap: '10%'  // 减小类目间距，使图表更紧凑

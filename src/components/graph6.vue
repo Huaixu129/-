@@ -20,16 +20,23 @@ onMounted(() => {
         textStyle: {
           fontSize: 14,
           color: "#333",
+          fontFamily: "点书小隶体, sans-serif"
         },
         padding: [10, 0, 10, 0],
       },
       tooltip: {
         trigger: "item",
+        textStyle: {
+          fontFamily: "点书小隶体, sans-serif"
+        }
       },
       legend: {
         data: ["流域面积（万km²）"],
         top: "15%",
         left: "center",
+        textStyle: {
+          fontFamily: "点书小隶体, sans-serif"
+        }
       },
       grid: {
         left: "3%",
@@ -40,6 +47,9 @@ onMounted(() => {
       },
       xAxis: {
         name: "流域",
+        nameTextStyle: {
+          fontFamily: "点书小隶体, sans-serif"
+        },
         data: [
           "长江",
           "黄河",
@@ -56,16 +66,19 @@ onMounted(() => {
           rotate: 45,
           fontSize: 11,
           interval: 0,
+          fontFamily: "点书小隶体, sans-serif"
         },
       },
       yAxis: {
         name: "面积",
         nameTextStyle: {
           padding: [0, 0, 0, 5],
-          fontSize: 12
+          fontSize: 12,
+          fontFamily: "点书小隶体, sans-serif"
         },
         axisLabel: {
-          fontSize: 11
+          fontSize: 11,
+          fontFamily: "点书小隶体, sans-serif"
         }
       },
       series: [
