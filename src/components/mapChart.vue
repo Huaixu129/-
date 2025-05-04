@@ -144,7 +144,7 @@ const renderChart = () => {
             fontFamily: "点书小隶体",
             fontSize: 18,
             fontWeight: 'bold',
-            color: 'rgb(237, 18, 66)'
+            color: 'rgb(163, 51, 0)'
           }
         },
         tooltip: {

@@ -127,7 +127,7 @@
     top: 50%;
     width: 16px;
     height: 16px;
-    background-color: #4CAF50;
+    background-color:rgb(136, 154, 135);
     border-radius: 50%;
     transform: translate(-50%, -50%);
     z-index: 5;

@@ -18,7 +18,7 @@ onMounted(() => {
       useDirtyRect: true
     });
 
-    const colorPalette = ['#A0C0C0', '#A07040', '#F0D080', '#608060'];
+    const colorPalette = ['#A86D33', '#5A8A8B', '#57805D', '#E5C979'];
 
     const option = {
       title: {

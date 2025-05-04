@@ -13,7 +13,7 @@ onMounted(() => {
   if (chartRef.value) {
     myChart = echarts.init(chartRef.value);
     const option = {
-      color: ["#A0C0C0", "#A07040", "#F0D080", "#608060", "#5F7A76"],
+      color: ["#58815C", "#6B9B7F", "#F8CF72", "#DECB8D", "#A2B49D"],
       title: {
         text: "中国水利工程分类统计",
         subtext: "数据来源：《中国科学技术史 水利卷》",

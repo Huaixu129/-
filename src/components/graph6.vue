@@ -13,6 +13,8 @@ onMounted(() => {
   if (chartContainer.value) {
     myChart = echarts.init(chartContainer.value);
 
+    const colorPalette = ['#6B9B7F', '#A66D31', '#F7D06E', '#A2B49D'];
+
     const option = {
       title: {
         text: "中国主要流域面积柱状图",
@@ -36,6 +38,9 @@ onMounted(() => {
         left: "center",
         textStyle: {
           fontFamily: "点书小隶体, sans-serif"
+        },
+        itemStyle: {
+          color: "#a0c0c0"
         }
       },
       grid: {
@@ -85,20 +90,13 @@ onMounted(() => {
         {
           name: "流域面积（万km²）",
           type: "bar",
-          data: [
-            { value: 180, itemStyle: { color: "#A0C0C0" } },
-            { value: 79.5, itemStyle: { color: "#A07040" } },
-            { value: 45.4, itemStyle: { color: "#F0D080" } },
-            { value: 27, itemStyle: { color: "#608060" } },
-            { value: 31.8, itemStyle: { color: "#A0C0C0" } },
-            { value: 124, itemStyle: { color: "#A07040" } },
-            { value: 24, itemStyle: { color: "#F0D080" } },
-            { value: 85, itemStyle: { color: "#608060" } },
-            { value: 337, itemStyle: { color: "#A0C0C0" } },
-            { value: 20.0, itemStyle: { color: "#A07040" } },
-          ],
+          data: [180, 79.5, 45.4, 27, 31.8, 124, 24, 85, 337, 20.0],
+          itemStyle: {
+          color: function (params) {
+            return colorPalette[params.dataIndex % colorPalette.length];
+          }
         },
-      ],
+        }],
     };
 
     myChart.setOption(option);

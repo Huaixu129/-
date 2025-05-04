@@ -3,7 +3,9 @@
     <div class="project-title">
       {{ hoveredProject ? hoveredProject : '水利工程示意图' }}
     </div>
-    <img :src="currentImageSrc" alt="水利工程示意图" class="project-image" @error="handleImageError" />
+    <div class="image-wrapper">
+      <img :src="currentImageSrc" alt="水利工程示意图" class="project-image" @error="handleImageError" />
+    </div>
   </div>
 </template>
 <script setup>
@@ -68,12 +70,22 @@ const handleImageError = () => {
   position: relative; /* 确保标题在正常文档流中 */
 }
 
+.image-wrapper {
+  width: 95%;
+  height: calc(100% - 100px); /* 减去标题高度和间距 */
+  border: 3px dashed #777; /* 更粗更明显的灰色虚线边框 */
+  border-radius: 8px; /* 圆角边框 */
+  box-sizing: border-box; /* 确保边框和内边距计入总宽高 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .project-image {
-  width: 100%;
-  height: calc(100% - 45px); /* 减去标题高度和间距 */
-  object-fit: cover;
+  width: 100%; /* 占据容器宽度的95% */
+  height: 100%; /* 占据容器高度的95% */
+  object-fit: fill; /* 拉伸图片填充整个区域 */
   object-position: center;
-  position: relative;
   z-index: 1; /* 确保图片在标题下方 */
 }
 </style>
