@@ -1,66 +1,120 @@
 <template>
-    <div ref="chartContainer" style="width: 900px; height: 500px;"></div>
-  </template>
-  
-  <script>
-  import * as echarts from 'echarts';
-  
-  export default {
-    name: 'RiverAreaChart',
-    mounted() {
-      const chartDom = this.$refs.chartContainer;
-      const myChart = echarts.init(chartDom);
-  
-      const option = {
-        title: {
-          text: '中国主要流域面积柱状图',
-          left: 'center',
-          padding: [20, 0, 10, 0]
+  <div ref="chartContainer" class="chart-container"></div>
+</template>
+
+<script setup>
+import { ref, onMounted, onBeforeUnmount } from "vue";
+import * as echarts from "echarts";
+
+const chartContainer = ref(null);
+let myChart = null;
+
+onMounted(() => {
+  if (chartContainer.value) {
+    myChart = echarts.init(chartContainer.value);
+
+    const option = {
+      title: {
+        text: "中国主要流域面积柱状图",
+        left: "center",
+        textStyle: {
+          fontSize: 14,
+          color: "#333",
         },
-        tooltip: {
-          trigger: 'item'
+        padding: [10, 0, 10, 0],
+      },
+      tooltip: {
+        trigger: "item",
+      },
+      legend: {
+        data: ["流域面积（万km²）"],
+        top: "15%",
+        left: "center",
+      },
+      grid: {
+        left: "3%",
+        right: "4%",
+        bottom: "10%",
+        top: "25%",
+        containLabel: true,
+      },
+      xAxis: {
+        name: "流域",
+        data: [
+          "长江",
+          "黄河",
+          "珠江",
+          "淮河",
+          "海河",
+          "松辽",
+          "东南诸河",
+          "西南诸河",
+          "内陆河",
+          "其他",
+        ],
+        axisLabel: {
+          rotate: 45,
+          fontSize: 11,
+          interval: 0,
         },
-        legend: {
-          data: ['流域面积（万km²）'],
-          top: '10%'
+      },
+      yAxis: {
+        name: "面积",
+        nameTextStyle: {
+          padding: [0, 0, 0, 5],
+          fontSize: 12
         },
-        xAxis: {
+        axisLabel: {
+          fontSize: 11
+        }
+      },
+      series: [
+        {
+          name: "流域面积（万km²）",
+          type: "bar",
           data: [
-            '长江流域', '黄河流域', '珠江流域', '淮河流域',
-            '海河流域', '松辽流域', '东南诸河流域',
-            '西南诸河流域', '内陆河流域', '其他（小流域）'
+            { value: 180, itemStyle: { color: "#A0C0C0" } },
+            { value: 79.5, itemStyle: { color: "#A07040" } },
+            { value: 45.4, itemStyle: { color: "#F0D080" } },
+            { value: 27, itemStyle: { color: "#608060" } },
+            { value: 31.8, itemStyle: { color: "#A0C0C0" } },
+            { value: 124, itemStyle: { color: "#A07040" } },
+            { value: 24, itemStyle: { color: "#F0D080" } },
+            { value: 85, itemStyle: { color: "#608060" } },
+            { value: 337, itemStyle: { color: "#A0C0C0" } },
+            { value: 20.0, itemStyle: { color: "#A07040" } },
           ],
-          axisLabel: {
-            rotate: 45
-          }
         },
-        yAxis: {
-          name: '面积（万km²）'
-        },
-        series: [
-          {
-            name: '流域面积（万km²）',
-            type: 'bar',
-            data: [
-              { value: 180, itemStyle: { color: '#A0C0C0' } },
-              { value: 79.5, itemStyle: { color: '#A07040' } },
-              { value: 45.4, itemStyle: { color: '#F0D080' } },
-              { value: 27, itemStyle: { color: '#608060' } },
-              { value: 31.8, itemStyle: { color: '#A0C0C0' } },
-              { value: 124, itemStyle: { color: '#A07040' } },
-              { value: 24, itemStyle: { color: '#F0D080' } },
-              { value: 85, itemStyle: { color: '#608060' } },
-              { value: 337, itemStyle: { color: '#A0C0C0' } },
-              { value: 20.0, itemStyle: { color: '#A07040' } }
-            ]
-          }
-        ]
-      };
-  
-      myChart.setOption(option);
-      // 监听窗口变化，自动适配大小
-      window.addEventListener('resize', () => myChart.resize());
+      ],
+    };
+
+    myChart.setOption(option);
+
+    // 监听窗口变化，自动适配大小
+    const resizeHandler = () => myChart.resize();
+    window.addEventListener("resize", resizeHandler);
+
+    // 保存事件处理器以便在组件卸载时移除
+    chartContainer.value._resizeHandler = resizeHandler;
+  }
+});
+
+onBeforeUnmount(() => {
+  if (myChart) {
+    // 移除事件监听器
+    if (chartContainer.value && chartContainer.value._resizeHandler) {
+      window.removeEventListener("resize", chartContainer.value._resizeHandler);
     }
-  };
-  </script>
-  
+    myChart.dispose();
+    myChart = null;
+  }
+});
+</script>
+
+<style scoped>
+.chart-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+</style>
