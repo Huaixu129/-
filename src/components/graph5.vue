@@ -1,478 +1,142 @@
 <template>
-  <div
-    id="chart"
-    class="chart-container"
-    style="width: 900px; height: 500px"
-  ></div>
+  <div class="chart-wrapper">
+    <div ref="chartRef" class="chart-container"></div>
+  </div>
 </template>
 
 <script setup>
-import { onMounted, onBeforeUnmount } from "vue";
-import * as echarts from "echarts";
+import { onMounted, ref, onBeforeUnmount } from 'vue';
+import * as echarts from 'echarts';
 
-const chartDom = document.getElementById("chart");
+const chartRef = ref(null);
 let myChart = null;
 
 onMounted(() => {
-  if (chartDom) {
-    myChart = echarts.init(chartDom, "white", { renderer: "canvas" });
+  if (chartRef.value) {
+    myChart = echarts.init(chartRef.value, null, {
+      renderer: 'canvas',
+      useDirtyRect: true
+    });
+
+    const colorPalette = ['#A0C0C0', '#A07040', '#F0D080', '#608060'];
+
     const option = {
-      animation: true,
-      animationThreshold: 2000,
-      animationDuration: 1000,
-      animationEasing: "cubicOut",
-      animationDelay: 0,
-      animationDurationUpdate: 300,
-      animationEasingUpdate: "cubicOut",
-      animationDelayUpdate: 0,
-      aria: {
-        enabled: false,
-      },
-      color: [
-        "#5470c6",
-        "#91cc75",
-        "#fac858",
-        "#ee6666",
-        "#73c0de",
-        "#3ba272",
-        "#fc8452",
-        "#9a60b4",
-        "#ea7ccc",
-      ],
-      series: [
-        {
-          type: "bar",
-          name: "\u6c34\u5e93\uff08\u5ea7\uff09",
-          legendHoverLink: true,
-          data: [
-            88, 23, 1090, 620, 490, 950, 1630, 1120, 4, 1100, 4300, 5200, 3500,
-            10600, 6400, 2500, 6200, 14000, 8400, 4500, 1100, 3000, 7800, 2300,
-            5600, 80, 1100, 300, 150, 220, 500,
-          ],
-          realtimeSort: false,
-          showBackground: false,
-          stack: "stack1",
-          stackStrategy: "samesign",
-          cursor: "pointer",
-          barMinHeight: 0,
-          barCategoryGap: "20%",
-          barGap: "30%",
-          large: false,
-          largeThreshold: 400,
-          seriesLayoutBy: "column",
-          datasetIndex: 0,
-          clip: true,
-          zlevel: 0,
-          z: 2,
-          label: {
-            show: false,
-            margin: 8,
-            valueAnimation: false,
-          },
-        },
-        {
-          type: "bar",
-          name: "\u6c34\u7535\u7ad9\uff08\u5ea7\uff09",
-          legendHoverLink: true,
-          data: [
-            18, 5, 320, 250, 180, 210, 150, 90, 0, 200, 3100, 1800, 6200, 3700,
-            500, 800, 3900, 5300, 6200, 2800, 150, 1200, 4500, 1800, 3800, 400,
-            600, 400, 300, 50, 600,
-          ],
-          realtimeSort: false,
-          showBackground: false,
-          stack: "stack1",
-          stackStrategy: "samesign",
-          cursor: "pointer",
-          barMinHeight: 0,
-          barCategoryGap: "20%",
-          barGap: "30%",
-          large: false,
-          largeThreshold: 400,
-          seriesLayoutBy: "column",
-          datasetIndex: 0,
-          clip: true,
-          zlevel: 0,
-          z: 2,
-          label: {
-            show: false,
-            margin: 8,
-            valueAnimation: false,
-          },
-        },
-        {
-          type: "bar",
-          name: "\u5824\u9632\uff08\u516c\u91cc\uff09",
-          legendHoverLink: true,
-          data: [
-            1020, 1542, 5600, 3200, 4800, 6200, 5400, 7800, 2800, 6800, 6500,
-            8100, 5300, 7900, 10000, 7200, 11000, 9800, 16000, 6700, 1500, 3200,
-            12000, 4500, 8200, 1200, 4300, 3500, 1800, 2000, 4800,
-          ],
-          realtimeSort: false,
-          showBackground: false,
-          stack: "stack1",
-          stackStrategy: "samesign",
-          cursor: "pointer",
-          barMinHeight: 0,
-          barCategoryGap: "20%",
-          barGap: "30%",
-          large: false,
-          largeThreshold: 400,
-          seriesLayoutBy: "column",
-          datasetIndex: 0,
-          clip: true,
-          zlevel: 0,
-          z: 2,
-          label: {
-            show: false,
-            margin: 8,
-            valueAnimation: false,
-          },
-        },
-        {
-          type: "bar",
-          name: "\u704c\u533a\uff08\u5904\uff09",
-          legendHoverLink: true,
-          data: [
-            1200, 800, 3500, 2100, 2800, 2900, 2600, 3300, 500, 2400, 1900,
-            2700, 1500, 1800, 4300, 5600, 2500, 2100, 3000, 2200, 800, 1500,
-            2700, 1600, 1700, 300, 2400, 1200, 500, 900, 3200,
-          ],
-          realtimeSort: false,
-          showBackground: false,
-          stack: "stack1",
-          stackStrategy: "samesign",
-          cursor: "pointer",
-          barMinHeight: 0,
-          barCategoryGap: "20%",
-          barGap: "30%",
-          large: false,
-          largeThreshold: 400,
-          seriesLayoutBy: "column",
-          datasetIndex: 0,
-          clip: true,
-          zlevel: 0,
-          z: 2,
-          label: {
-            show: false,
-            margin: 8,
-            valueAnimation: false,
-          },
-        },
-        {
-          type: "bar",
-          name: "\u5858\u575d/\u7a96\u6c60\uff08\u5904\uff09",
-          legendHoverLink: true,
-          data: [
-            3000, 1000, 68000, 52000, 46000, 71000, 59000, 84000, 200, 123000,
-            152000, 186000, 108000, 221000, 95000, 128000, 146000, 257000,
-            205000, 169000, 32000, 87000, 183000, 112000, 164000, 8000, 75000,
-            86000, 12000, 21000, 73000,
-          ],
-          realtimeSort: false,
-          showBackground: false,
-          stack: "stack1",
-          stackStrategy: "samesign",
-          cursor: "pointer",
-          barMinHeight: 0,
-          barCategoryGap: "20%",
-          barGap: "30%",
-          large: false,
-          largeThreshold: 400,
-          seriesLayoutBy: "column",
-          datasetIndex: 0,
-          clip: true,
-          zlevel: 0,
-          z: 2,
-          label: {
-            show: false,
-            margin: 8,
-            valueAnimation: false,
-          },
-        },
-        {
-          type: "bar",
-          name: "\u6cf5\u7ad9\uff08\u5ea7\uff09",
-          legendHoverLink: true,
-          data: [
-            8000, 6000, 82000, 45000, 39000, 68000, 53000, 71000, 3000, 97000,
-            115000, 142000, 76000, 164000, 128000, 153000, 187000, 215000,
-            198000, 134000, 25000, 69000, 176000, 91000, 143000, 5000, 62000,
-            58000, 10000, 17000, 60000,
-          ],
-          realtimeSort: false,
-          showBackground: false,
-          stack: "stack1",
-          stackStrategy: "samesign",
-          cursor: "pointer",
-          barMinHeight: 0,
-          barCategoryGap: "20%",
-          barGap: "30%",
-          large: false,
-          largeThreshold: 400,
-          seriesLayoutBy: "column",
-          datasetIndex: 0,
-          clip: true,
-          zlevel: 0,
-          z: 2,
-          label: {
-            show: false,
-            margin: 8,
-            valueAnimation: false,
-          },
-        },
-      ],
-      legend: [
-        {
-          data: [
-            "\u6c34\u5e93\uff08\u5ea7\uff09",
-            "\u6c34\u7535\u7ad9\uff08\u5ea7\uff09",
-            "\u5824\u9632\uff08\u516c\u91cc\uff09",
-            "\u704c\u533a\uff08\u5904\uff09",
-            "\u5858\u575d/\u7a96\u6c60\uff08\u5904\uff09",
-            "\u6cf5\u7ad9\uff08\u5ea7\uff09",
-          ],
-          selected: {},
-          show: true,
-          padding: 5,
-          itemGap: 10,
-          itemWidth: 25,
-          itemHeight: 14,
-          backgroundColor: "transparent",
-          borderColor: "#ccc",
-          borderRadius: 0,
-          pageButtonItemGap: 5,
-          pageButtonPosition: "end",
-          pageFormatter: "{current}/{total}",
-          pageIconColor: "#2f4554",
-          pageIconInactiveColor: "#aaa",
-          pageIconSize: 15,
-          animationDurationUpdate: 800,
-          selector: false,
-          selectorPosition: "auto",
-          selectorItemGap: 7,
-          selectorButtonGap: 10,
-        },
-      ],
-      tooltip: {
-        show: true,
-        trigger: "item",
-        triggerOn: "mousemove|click",
-        axisPointer: {
-          type: "line",
-        },
-        showContent: true,
-        alwaysShowContent: false,
-        showDelay: 0,
-        hideDelay: 100,
-        enterable: false,
-        confine: false,
-        appendToBody: false,
-        transitionDuration: 0.4,
+      title: {
+        text: '各省份水利工程总数TOP10',
+        left: 'center',
+        top: '5%',
         textStyle: {
           fontSize: 14,
-        },
-        borderWidth: 0,
-        padding: 5,
-        order: "seriesAsc",
+          color: '#333'
+        }
       },
-      xAxis: [
-        {
-          name: "\u6570\u91cf",
-          show: true,
-          scale: false,
-          nameLocation: "end",
-          nameGap: 15,
-          gridIndex: 0,
-          inverse: false,
-          offset: 0,
-          splitNumber: 5,
-          minInterval: 0,
-          splitLine: {
-            show: true,
-            lineStyle: {
-              show: true,
-              width: 1,
-              opacity: 1,
-              curveness: 0,
-              type: "solid",
-            },
-          },
-          animation: true,
-          animationThreshold: 2000,
-          animationDuration: 1000,
-          animationEasing: "cubicOut",
-          animationDelay: 0,
-          animationDurationUpdate: 300,
-          animationEasingUpdate: "cubicOut",
-          animationDelayUpdate: 0,
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow'
         },
-      ],
-      yAxis: [
-        {
-          name: "\u7701\u4efd",
-          show: true,
-          scale: false,
-          nameLocation: "end",
-          nameGap: 15,
-          gridIndex: 0,
-          inverse: false,
-          offset: 0,
-          splitNumber: 5,
-          minInterval: 0,
-          splitLine: {
-            show: true,
-            lineStyle: {
-              show: true,
-              width: 1,
-              opacity: 1,
-              curveness: 0,
-              type: "solid",
-            },
-          },
-          animation: true,
-          animationThreshold: 2000,
-          animationDuration: 1000,
-          animationEasing: "cubicOut",
-          animationDelay: 0,
-          animationDurationUpdate: 300,
-          animationEasingUpdate: "cubicOut",
-          animationDelayUpdate: 0,
-          data: [
-            "\u5317\u4eac",
-            "\u5929\u6d25",
-            "\u6cb3\u5317",
-            "\u5c71\u897f",
-            "\u5185\u8499\u53e4",
-            "\u8fbd\u5b81",
-            "\u5409\u6797",
-            "\u9ed1\u9f99\u6c5f",
-            "\u4e0a\u6d77",
-            "\u6c5f\u82cf",
-            "\u6d59\u6c5f",
-            "\u5b89\u5fbd",
-            "\u798f\u5efa",
-            "\u6c5f\u897f",
-            "\u5c71\u4e1c",
-            "\u6cb3\u5357",
-            "\u6e56\u5317",
-            "\u6e56\u5357",
-            "\u5e7f\u4e1c",
-            "\u5e7f\u897f",
-            "\u6d77\u5357",
-            "\u91cd\u5e86",
-            "\u56db\u5ddd",
-            "\u8d35\u5dde",
-            "\u4e91\u5357",
-            "\u897f\u85cf",
-            "\u9655\u897f",
-            "\u7518\u8083",
-            "\u9752\u6d77",
-            "\u5b81\u590f",
-            "\u65b0\u7586",
-          ],
+        formatter: function(params) {
+          // 获取第一个数据项的名称和值
+          var name = params[0].name;
+          var value = params[0].value;
+          // 格式化为"万"单位，保留1位小数
+          var formattedValue = (value / 10000).toFixed(1);
+          return name + ': ' + formattedValue + ' 万';
+        }
+      },
+      grid: {
+        left: '1%',
+        right: '20%',
+        top: '15%',
+        bottom: '6%',
+        containLabel: true
+      },
+      yAxis: {
+        type: 'category',
+        data: ['湖南', '广东', '江西', '四川', '湖北', '安徽', '云南', '广西', '河南', '浙江'],
+        axisLabel: {
+          fontSize: 12
+        }
+      },
+      xAxis: {
+        type: 'value',
+        name: '总数（万）',
+        nameLocation: 'end',
+        nameGap: 15,
+        nameTextStyle: {
+          padding: [5, 0, 0, 0],
+          align: 'right'
         },
-      ],
-      title: [
-        {
-          show: true,
-          text: "\u5404\u7701\u4efd\u6c34\u5229\u5de5\u7a0b\u6570\u636e\u6a2a\u5411\u5806\u53e0\u5bf9\u6bd4",
-          target: "blank",
-          subtarget: "blank",
-          padding: 5,
-          itemGap: 10,
-          textAlign: "auto",
-          textVerticalAlign: "auto",
-          triggerEvent: false,
+        axisLabel: {
+          fontSize: 12,
+          formatter: function(value) {
+            return (value / 10000).toFixed(0);
+          }
         },
-      ],
-      toolbox: {
+        splitLine: {
+          show: true
+        }
+      },
+      series: [{
+        name: '水利工程总数',
+        type: 'bar',
+        data: [503200, 436600, 409000, 386000, 356600, 345800, 326300, 319200, 297100, 282800],
+        itemStyle: {
+          color: function (params) {
+            return colorPalette[params.dataIndex % colorPalette.length];
+          }
+        },
+        label: {
+          show: true,
+          position: 'right',
+          fontSize: 12,
+          formatter: function(params) {
+            // 格式化为"万"单位，保留1位小数
+            return (params.value / 10000).toFixed(1) + '万';
+          }
+        },
+        barWidth: '60%',  // 增加柱子宽度，使图表显得更大
+        barCategoryGap: '10%'  // 减小类目间距，使图表更紧凑
+      }],
+      dataZoom: [{
+        type: 'slider',
         show: true,
-        orient: "horizontal",
-        itemSize: 15,
-        itemGap: 10,
-        left: "80%",
-        feature: {
-          saveAsImage: {
-            type: "png",
-            backgroundColor: "auto",
-            connectedBackgroundColor: "#fff",
-            show: true,
-            title: "\u4fdd\u5b58\u4e3a\u56fe\u7247",
-            pixelRatio: 1,
-          },
-          restore: {
-            show: true,
-            title: "\u8fd8\u539f",
-          },
-          dataView: {
-            show: true,
-            title: "\u6570\u636e\u89c6\u56fe",
-            readOnly: false,
-            lang: ["\u6570\u636e\u89c6\u56fe", "\u5173\u95ed", "\u5237\u65b0"],
-            backgroundColor: "#fff",
-            textareaColor: "#fff",
-            textareaBorderColor: "#333",
-            textColor: "#000",
-            buttonColor: "#c23531",
-            buttonTextColor: "#fff",
-          },
-          dataZoom: {
-            show: true,
-            title: {
-              zoom: "\u533a\u57df\u7f29\u653e",
-              back: "\u533a\u57df\u7f29\u653e\u8fd8\u539f",
-            },
-            icon: {},
-            filterMode: "filter",
-          },
-          magicType: {
-            show: true,
-            type: ["line", "bar", "stack", "tiled"],
-            title: {
-              line: "\u5207\u6362\u4e3a\u6298\u7ebf\u56fe",
-              bar: "\u5207\u6362\u4e3a\u67f1\u72b6\u56fe",
-              stack: "\u5207\u6362\u4e3a\u5806\u53e0",
-              tiled: "\u5207\u6362\u4e3a\u5e73\u94fa",
-            },
-            icon: {},
-          },
-        },
-      },
-      dataZoom: [
-        {
-          show: true,
-          type: "slider",
-          showDetail: true,
-          showDataShadow: true,
-          realtime: true,
-          start: 20,
-          end: 80,
-          orient: "horizontal",
-          zoomLock: false,
-          filterMode: "filter",
-        },
-      ],
+        yAxisIndex: 0,
+        filterMode: 'filter',
+        width: 15,
+        right: 15,
+        start: 0,
+        end: 70,
+        bottom: '12%'
+      }]
     };
 
     myChart.setOption(option);
-    window.addEventListener("resize", myChart.resize);
+    window.addEventListener('resize', () => myChart.resize());
   }
 });
 
 onBeforeUnmount(() => {
   if (myChart) {
-    window.removeEventListener("resize", myChart.resize);
+    window.removeEventListener('resize', myChart.resize);
     myChart.dispose();
   }
 });
 </script>
 
-<style>
-.chart-container {
-  position: relative;
+<style scoped>
+.chart-wrapper {
   width: 100%;
   height: 100%;
+  display: flex;
+  justify-content: flex-start;  /* 从左侧开始对齐 */
+  align-items: flex-end;        /* 向底部对齐 */
+  overflow: visible;  /* 允许内容溢出容器 */
+}
+
+.chart-container {
+  width: 100%;
+  height: 100%;
+  overflow: visible; /* 允许内容溢出容器 */
 }
 </style>

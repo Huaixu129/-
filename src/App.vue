@@ -137,17 +137,18 @@ body {
 
 .chart-right-middle {
   grid-column: 3 / 4;
-  grid-row: 7 / 13;
+  grid-row: 7 / 14;
 }
 
 .chart-right-bottom {
   grid-column: 3 / 4;
-  grid-row: 13 / 20;
+  grid-row: 13 / 21;
+  border: 2px solid #d86a5a;
 }
 
 .chart-bottom {
   grid-column: 1 / 3;
-  grid-row: 15 / 20;
+  grid-row: 15 / 21;
 }
 
 .dashboard-item {
