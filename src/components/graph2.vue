@@ -72,7 +72,7 @@ const handleImageError = () => {
 
 .image-wrapper {
   width: 95%;
-  height: calc(100% - 100px); /* 减去标题高度和间距 */
+  height: calc(100% - 80px); /* 减去标题高度和间距 */
   border: 3px dashed #777; /* 更粗更明显的灰色虚线边框 */
   border-radius: 8px; /* 圆角边框 */
   box-sizing: border-box; /* 确保边框和内边距计入总宽高 */

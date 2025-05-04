@@ -253,7 +253,7 @@ const engineerInfo = computed(() => {
 
 .project-image {
   position: absolute;
-  top: 40%;
+  top: 45%;
   left: 50%;
   transform: translate(-50%, -42%) scale(0.95);
   max-width: 80%;
@@ -281,7 +281,7 @@ const engineerInfo = computed(() => {
   overflow-y: auto;
   padding: 10px 0 40px 0;
   color: #0f0e0e;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  /* text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); */
   box-sizing: border-box;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE 10+ */
@@ -314,7 +314,7 @@ const engineerInfo = computed(() => {
   font-size: 1.5rem;
   font-weight: bold;
   margin: 0.3rem 0 0.3rem 0;
-  color: #ffd700;
+  color: #8f7424;
 }
 
 .achievement-list {
